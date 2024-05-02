@@ -18,7 +18,7 @@ errorIndication, errorStatus, errorIndex, varBinds = cmdGen.getCmd(
     auth,
     cmdgen.UdpTransportTarget((host, 161)),
     cmdgen.MibVariable(SYSNAME),
-    lookupMib=False,
+    lookupMib=True,
 )
 
 # Check if there was an error querying the device
