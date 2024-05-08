@@ -1,4 +1,9 @@
 pysnmp
 pandas
 openpyxl
+<<<<<<< HEAD
 googletrans==4.0.0-rc1
+=======
+paho-mqtt==1.6.1
+python-dotenv
+>>>>>>> c1339b1c56f8e4a01ff21761daace554237590ab
