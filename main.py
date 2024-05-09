@@ -19,7 +19,7 @@ parameter_dict = {
   "site_id": ["identName","1.3.6.1.4.1.40211.1.1.1.4.0"],
   "system_type": ["identModel","1.3.6.1.4.1.40211.1.1.1.2.0"],
 #   "system_type": ["identInternalVersion","1.3.6.1.4.1.402141.1.1.1.5.0"],
-#   "system_alarm_status":["systemStatus","1.3.6.1.4.1.40211.2.1.1.1.0"],
+  "system_alarm_status":["systemStatus","1.3.6.1.4.1.40211.2.1.1.1.0"],
 
 #   "system_current":["systemCurrent","1.3.6.1.4.1.40211.2.1.1.3.0"],
 #   
@@ -34,8 +34,9 @@ parameter_dict = {
   "phase_l3_current": ["psInputLineCVoltage","1.3.6.1.4.1.40211.4.1.1.3.0"],
 #   "phase_frequency": ["psInputFrequency","1.3.6.1.4.1.40211.4.1.1.4.0"],
   "dc_output_voltage":["systemVoltage","1.3.6.1.4.1.40211.2.1.1.2.0"],
-  "battery_capacity_ah_1":["battAH","1.3.6.1.4.1.40211.2.1.1.11.0"],
-#   "battery_capacity_ah_2":["battAH","1.3.6.1.4.1.40211.2.1.1.11.1"],
+  "battery_capacity_1_ah":["battAH","1.3.6.1.4.1.40211.2.1.1.11.0"],
+  "battery_capacity_2_ah":["battAH","1.3.6.1.4.1.40211.2.1.1.11.0"],
+  "total_rate_battery_capacity_Ah":["battAH","1.3.6.1.4.1.40211.2.1.1.11.0"],
   
 #   "load_current_1":["loadCurr1","1.3.6.1.4.1.40211.3.1.1.6.0"],
 #   "load_current_2":["loadCurr2","1.3.6.1.4.1.40211.3.1.1.7.0"],
@@ -49,16 +50,15 @@ parameter_dict = {
   "total_load_power":["battEnergy","1.3.6.1.4.1.40211.3.1.1.21.0"],
 
  
-#   "battery_current_1":["psBatteryCurrent1","1.3.6.1.4.1.40211.3.1.1.2.0"],
-#   "battery_current_2":["psBatteryCurrent2","1.3.6.1.4.1.40211.3.1.1.3.0"],
-#   "total_battery_current":["psBatteryCurrent","1.3.6.1.4.1.40211.3.1.1.1.0"],
-#   "battery_capacity_1":["psBatteryCapacity1","1.3.6.1.4.1.40211.3.1.1.4.0"],
-#   "battery_capacity_2":["psBatteryCapacity2","1.3.6.1.4.1.40211.3.1.1.5.0"],
+
+  "battery_capacity_1_percent":["psBatteryCapacity1","1.3.6.1.4.1.40211.3.1.1.4.0"],
+  "battery_capacity_2_percent":["psBatteryCapacity2","1.3.6.1.4.1.40211.3.1.1.5.0"],
+  "total_rate_capacity_percent":["psBatteryCapacity2","1.3.6.1.4.1.40211.3.1.1.5.0"],
   "dc_energy_consumption":["battEnergy","1.3.6.1.4.1.40211.3.1.1.21.0"],
 #   "battery_slots":["battNum","1.3.6.1.4.1.40211.3.1.1.10.0"],
   
-#   "battery_temperature_1":["psTemperature1","1.3.6.1.4.1.40211.5.1.1.1.0"],
-#   "battery_temperature_2":["psTemperature2","1.3.6.1.4.1.40211.5.1.1.2.0"],
+  "battery_temperature_1":["psTemperature1","1.3.6.1.4.1.40211.5.1.1.1.0"],
+  "battery_temperature_2":["psTemperature2","1.3.6.1.4.1.40211.5.1.1.2.0"],
 
   "rectifier_total_current":["rectNum","1.3.6.1.4.1.40211.8.1.1.8.3"],
   "rectifier_rate_voltage":["rectNum","1.3.6.1.4.1.40211.8.1.1.8.3"], 
@@ -89,8 +89,11 @@ parameter_dict = {
   "rectifier_3_temperature":["rectNum","1.3.6.1.4.1.40211.8.1.1.6.3"],
   "rectifier_3_serial_number":["rectNum","1.3.6.1.4.1.40211.8.1.1.8.3"],
 
-  "battery_charging_status":["psStatusBatteryMode","1.3.6.1.4.1.40211.2.1.1.5.0"],
-"total_battery_current":["psBatteryCurrent","1.3.6.1.4.1.40211.3.1.1.1.0"],
+  "battery_charging_state":["psStatusBatteryMode","1.3.6.1.4.1.40211.2.1.1.5.0"],
+  "total_battery_current":["psBatteryCurrent","1.3.6.1.4.1.40211.3.1.1.1.0"],
+   "battery_current_1":["psBatteryCurrent1","1.3.6.1.4.1.40211.3.1.1.2.0"],
+  "battery_current_2":["psBatteryCurrent2","1.3.6.1.4.1.40211.3.1.1.3.0"],
+ 
 }
 
 
@@ -98,9 +101,20 @@ parameter_dict = {
 list_volt = ["phase_l1_voltage",
              "phase_l2_voltage",
              "phase_l3_voltage",
+             "phase_l1_current",
+             "phase_l2_current",
+             "phase_l3_current",
              "dc_output_voltage",
-             "battery_capacity_ah_1",
-             "battery_capacity_ah_2"]
+             "battery_capacity_1_ah",
+             "battery_capacity_2_ah",
+             "battery_capacity_1_percent",
+             "battery_capacity_2_percent"
+             "total_battery_capacity_ah",
+             "total_battery_capacity_percent",
+             "dc_energy_consumption",
+             "battery_temperature_1",
+             "battery_temperature_2",
+             ]
 
 def convert_volt(x):
     angka = int(x)
@@ -189,6 +203,41 @@ def snmp_process(json_file):
                     if param_name in list_volt:
                         val = convert_volt(val.prettyPrint())
                         data[param_name] = val
+                    elif param_name == "system_alarm_status":
+                        if val == 2:
+                            data[param_name] = "Normal"
+                        elif val == 4:
+                            data[param_name] = "Minor"
+                        elif val == 5:
+                            data[param_name] = "Major"
+                        else:
+                            data[param_name] = val
+                    elif param_name == "battery_charging_state":
+                        if val == 2:
+                            data[param_name] = "Start"
+                        elif val == 3:
+                            data[param_name] = "ACCUT"
+                        elif val == 4:
+                            data[param_name] = "Boost"
+                        elif val == 5:
+                            data[param_name] = "Float"
+                        elif val == 6:
+                            data[param_name] = "Float Charging"
+                        elif val == 7:
+                            data[param_name] = "Temp Comp"
+                        elif val == 8:
+                            data[param_name] = "Boost Charging"
+                        elif val == 9:
+                            data[param_name] = "Short Test"
+                        elif val == 10:
+                            data[param_name] = "S   table Test"
+                        elif val == 11:
+                            data[param_name] = "Discharging"
+                        elif val == 12:
+                            data[param_name] = "Test"
+                        else:
+                            data[param_name] = val
+                        
                     else:
                         data[param_name] = val.prettyPrint()
 
