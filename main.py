@@ -97,10 +97,10 @@ parameter_dict = {
 
 
 
-list_volt = ["phase_l1_voltage",
-             "phase_l2_voltage",
-             "phase_l3_voltage",
+list_volt = [
              "dc_output_voltage",
+             "battery1_temperature",
+             "battrey2_temperature",
              "battery_capacity_ah_1",
              "battery_capacity_ah_2"]
 # slave address (in decimal)
