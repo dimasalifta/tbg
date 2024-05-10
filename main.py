@@ -39,16 +39,16 @@ parameter_dict = {
   "battery_capacity_ah_1":["battAH","1.3.6.1.4.1.40211.2.1.1.11.0"],
 #   "battery_capacity_ah_2":["battAH","1.3.6.1.4.1.40211.2.1.1.11.1"],
   
-#   "load_current_1":["loadCurr1","1.3.6.1.4.1.40211.3.1.1.6.0"],
-#   "load_current_2":["loadCurr2","1.3.6.1.4.1.40211.3.1.1.7.0"],
-#   "load_current_3":["loadCurr2","1.3.6.1.4.1.40211.3.1.1.8.0"],
-#   "load_current_4":["loadCurr3","1.3.6.1.4.1.40211.3.1.1.9.0"],
-  "total_dc_load_current":["psBatteryCurrent","1.3.6.1.4.1.40211.3.1.1.1.0"],
-#   "load_power_1":["load1Energy","1.3.6.1.4.1.40211.3.1.1.17.0"],
-#   "load_power_2":["load2Energy","1.3.6.1.4.1.40211.3.1.1.18.0"],
-#   "load_power_3":["load3Energy","1.3.6.1.4.1.40211.3.1.1.19.0"],
-#   "load_power_4":["load4Energy","1.3.6.1.4.1.40211.3.1.1.20.0"],
-  "total_dc_load_power":["battEnergy","1.3.6.1.4.1.40211.3.1.1.21.0"],
+  "load_current_1":["loadCurr1","1.3.6.1.4.1.40211.3.1.1.6.0"],
+  "load_current_2":["loadCurr2","1.3.6.1.4.1.40211.3.1.1.7.0"],
+  "load_current_3":["loadCurr2","1.3.6.1.4.1.40211.3.1.1.8.0"],
+  "load_current_4":["loadCurr3","1.3.6.1.4.1.40211.3.1.1.9.0"],
+#   "total_dc_load_current":["psBatteryCurrent","1.3.6.1.4.1.40211.3.1.1.1.0"],
+  "load_power_1":["load1Energy","1.3.6.1.4.1.40211.3.1.1.17.0"],
+  "load_power_2":["load2Energy","1.3.6.1.4.1.40211.3.1.1.18.0"],
+  "load_power_3":["load3Energy","1.3.6.1.4.1.40211.3.1.1.19.0"],
+  "load_power_4":["load4Energy","1.3.6.1.4.1.40211.3.1.1.20.0"],
+#   "total_dc_load_power":["battEnergy","1.3.6.1.4.1.40211.3.1.1.21.0"],
 
  
 #   "battery_current_1":["psBatteryCurrent1","1.3.6.1.4.1.40211.3.1.1.2.0"],
@@ -307,9 +307,18 @@ def snmp_process():
             # backup_time = data["backup_time"]
             battery1_temperature = data["battery1_temperature"]
             battery2_temperature = data["battery2_temperature"]
-            # total_dc_load_current = data["total_dc_load_current"]
-            # total_dc_load_power = data["total_dc_load_power"]
-            # # dc_energy_consumption = data["dc_energy_consumption"]
+            
+            load_current_1 = int(data["load_current_1"])
+            load_current_2 = int(data["load_current_2"])
+            load_current_3 = int(data["load_current_3"])
+            load_current_4 = int(data["load_current_4"])
+            total_dc_load_current =str(load_current_1+load_current_2+load_current_3+load_current_4)
+            load_power_1 = int(data["load_power_1"])
+            load_power_2 = int(data["load_power_2"])
+            load_power_3 = int(data["load_power_3"])
+            load_power_4 = int(data["load_power_4"])
+            total_dc_load_power =str(load_power_1+load_power_2+load_power_3+load_power_4)
+            dc_energy_consumption = data["dc_energy_consumption"]
             # rectifier_quantity = data["rectifier_slots"]
             # rectifier_current = data["rectifier_current"]
             # rectifier_rate_voltage = data["rectifier_rate_voltage"]
@@ -346,7 +355,9 @@ def snmp_process():
                 "battery1_temperature":battery1_temperature,
                 "battery2_temperature":battery2_temperature,
                 
-                # "site_id":site_id,
+                "total_dc_load_current":total_dc_load_current,
+                "total_dc_load_power":total_dc_load_power,
+                "dc_energy_consumption":dc_energy_consumption,
                 # "site_id":site_id,
                 # "site_id":site_id,
                 # "site_id":site_id,
