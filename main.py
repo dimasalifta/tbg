@@ -111,7 +111,10 @@ list_volt = [
              "load_power_2",
              "load_power_3",
              "load_power_4",
-             "dc_energy_consumption",
+             "dc_energy_consumption"
+             ]
+
+list_volt_2 = [
              "rectifier1_output_current",
              "rectifier2_output_current",
              "rectifier3_output_current",
@@ -192,6 +195,12 @@ list_register_energy_meter = {
 def convert_decimal(x):
     angka = int(x)
     hasil_pembagian = angka / 1000
+    # hasil_bulatan = round(hasil_pembagian)  
+    hasil = str(hasil_pembagian)
+    return hasil   
+def convert_decimal_2(x):
+    angka = int(x)
+    hasil_pembagian = angka / 100
     # hasil_bulatan = round(hasil_pembagian)  
     hasil = str(hasil_pembagian)
     return hasil   
@@ -306,6 +315,9 @@ def snmp_process():
                     # print(oid.prettyPrint(), val.prettyPrint())
                     # Menyimpan nilai ke dalam dictionary data
                     if param_name in list_volt:
+                        val = convert_decimal(val.prettyPrint())
+                        data[param_name] = val
+                    elif param_name in list_volt_2:
                         val = convert_decimal(val.prettyPrint())
                         data[param_name] = val
                     else:
