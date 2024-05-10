@@ -388,13 +388,13 @@ def snmp_process():
             battery2_current = data["battery2_current"]
             total_battery_current = data["total_battery_current"]
             
-            total_rate_capacity = data["total_rate_capacity"] # unit Ah
+            total_rate_capacity = float(data["total_rate_capacity"]) # unit Ah
             
             battery1_capacity = int(data["battery1_capacity"]) # %
             battery2_capacity = int(data["battery2_capacity"]) # %
             total_remaining_capacity_percent = (battery1_capacity+battery2_capacity)/2
 
-            # total_remaining_capacity = total_rate_capacity * (total_remaining_capacity_percent / 100)
+            total_remaining_capacity = total_rate_capacity * (total_remaining_capacity_percent / 100)
             # backup_time = total_remaining_capacity / float(total_dc_load_power)
             parameter_tbg = {
                 "site_id":site_id,
@@ -433,7 +433,7 @@ def snmp_process():
                 "battery2_current":battery2_current,
                 "total_battery_current":total_battery_current,
                 "total_rate_capacity":total_rate_capacity,
-                # "total_remaining_capacity":total_remaining_capacity,
+                "total_remaining_capacity":total_remaining_capacity,
                 "total_remaining_capacity_percent":total_remaining_capacity_percent,
                 # "backup_time" : backup_time,
                 
