@@ -344,7 +344,7 @@ def snmp_process():
                 
             }
             
-            pretty_parameter_tbg = json.dumps(parameter_tbg, indent=4)
+            # pretty_parameter_tbg = json.dumps(parameter_tbg, indent=4)
             print(parameter_tbg)
             # Mengonversi data menjadi format JSON
             payload = json.dumps(data)
