@@ -337,14 +337,14 @@ def snmp_process():
             rectifier_slots = data["rectifier_slots"]
             rectifier_quantity = rectifier_slots - 3
             
-            rectifier1_output_current = data["rectifier1_output_current"]
-            rectifier2_output_current = data["rectifier2_output_current"]
-            rectifier3_output_current = data["rectifier3_output_current"]
+            rectifier1_output_current = float(data["rectifier1_output_current"])
+            rectifier2_output_current = float(data["rectifier2_output_current"])
+            rectifier3_output_current = float(data["rectifier3_output_current"])
             rectifier_current = str(rectifier1_output_current+rectifier2_output_current+rectifier3_output_current)
             
-            rectifier1_output_voltage = data["rectifier1_output_voltage"]
-            rectifier2_output_voltage = data["rectifier2_output_voltage"]
-            rectifier3_output_voltage = data["rectifier3_output_voltage"]
+            rectifier1_output_voltage = float(data["rectifier1_output_voltage"])
+            rectifier2_output_voltage = float(data["rectifier2_output_voltage"])
+            rectifier3_output_voltage = float(data["rectifier3_output_voltage"])
             rectifier_rate_voltage = str((rectifier1_output_voltage+rectifier2_output_voltage+rectifier3_output_voltage)/3)
             
             # rectifier1_status = data["rectifier1_status"]
