@@ -167,7 +167,7 @@ list_register_energy_meter = {
     "l3_power_factor" : [46," theta"],
     
     "3phase_frequency" : [54," Hz"],
-    "energy_consumption" : [80," kWh"]
+    "ac_energy_consumption" : [80," kWh"]
     
 }
 def convert_decimal(x):
@@ -302,12 +302,12 @@ def snmp_process():
             l1_current = rs485_data["l1_current"]
             l2_current = rs485_data["l2_current"]
             l3_current = rs485_data["l3_current"]
-            # l1_voltage = rs485_data["l1_voltage"]
+            ac_energy_consumption = rs485_data["ac_energy_consumption"]
             # backup_time = data["backup_time"]
-            # battery1_temperature = data["battery1_temperature"]
-            # battery2_temperature = data["battery2_temperature"]
-            # total_dc_load_current = data["total_dc_load_current"]
-            # total_dc_load_power = data["total_dc_load_power"]
+            battery1_temperature = data["battery1_temperature"]
+            battery2_temperature = data["battery2_temperature"]
+            total_dc_load_current = data["total_dc_load_current"]
+            total_dc_load_power = data["total_dc_load_power"]
             # dc_energy_consumption = data["dc_energy_consumption"]
             # rectifier_quantity = data["rectifier_slots"]
             # rectifier_current = data["rectifier_current"]
@@ -337,7 +337,22 @@ def snmp_process():
                 "l3_voltage":l3_voltage,
                 "l1_current":l1_current,
                 "l2_current":l2_current,
-                "l3_current":l3_current
+                "l3_current":l3_current,
+                "ac_energy_consumption":ac_energy_consumption,
+                # "site_id":site_id,
+                "battery1_temperature":battery1_temperature,
+                "battery2_temperature":battery2_temperature,
+                # "site_id":site_id,
+                # "site_id":site_id,
+                # "site_id":site_id,
+                # "site_id":site_id,
+                # "site_id":site_id,
+                # "site_id":site_id,
+                # "site_id":site_id,
+                # "site_id":site_id,
+                # "site_id":site_id,
+                # "site_id":site_id,
+                # "site_id":site_id,
                 # "site_id":site_id,
 
                 
@@ -350,7 +365,7 @@ def snmp_process():
             payload = json.dumps(data)
             
             # Mengirim payload JSON ke broker MQTT
-            on_publish(payload)                                                                                                                                                  
+            on_publish(parameter_tbg)                                                                                                                                                  
             time.sleep(5)
         except Exception as e:
             print("Exception:", e)
