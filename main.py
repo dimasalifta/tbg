@@ -117,7 +117,10 @@ list_volt = [
              "dc_energy_consumption",
              "rectifier1_load_usage",
              "rectifier2_load_usage",
-             "rectifier3_load_usage"
+             "rectifier3_load_usage",
+             "total_rate_capacity",
+             "battery1_capacity",
+             "battery2_capacity",
              ]
 
 list_volt_2 = [
@@ -130,9 +133,7 @@ list_volt_2 = [
              "rectifier1_temperature",
              "rectifier2_temperature",
              "rectifier3_temperature",
-             "total_rate_capacity",
-             "battery1_capacity",
-             "battery2_capacity",
+
              ]
 # slave address (in decimal)
 DEVICE_ADDRESS_SHT20 = 1
