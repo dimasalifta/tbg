@@ -337,15 +337,15 @@ def snmp_process():
             rectifier_slots = data["rectifier_slots"]
             rectifier_quantity = rectifier_slots - 3
             
-            rectifier1_output_current = float(data["rectifier1_output_current"])
-            rectifier2_output_current = float(data["rectifier2_output_current"])
-            rectifier3_output_current = float(data["rectifier3_output_current"])
-            rectifier_current = str(rectifier1_output_current+rectifier2_output_current+rectifier3_output_current)
+            # rectifier1_output_current = float(data["rectifier1_output_current"])
+            # rectifier2_output_current = float(data["rectifier2_output_current"])
+            # rectifier3_output_current = float(data["rectifier3_output_current"])
+            # rectifier_current = str(rectifier1_output_current+rectifier2_output_current+rectifier3_output_current)
             
-            rectifier1_output_voltage = float(data["rectifier1_output_voltage"])
-            rectifier2_output_voltage = float(data["rectifier2_output_voltage"])
-            rectifier3_output_voltage = float(data["rectifier3_output_voltage"])
-            rectifier_rate_voltage = str((rectifier1_output_voltage+rectifier2_output_voltage+rectifier3_output_voltage)/3)
+            # rectifier1_output_voltage = float(data["rectifier1_output_voltage"])
+            # rectifier2_output_voltage = float(data["rectifier2_output_voltage"])
+            # rectifier3_output_voltage = float(data["rectifier3_output_voltage"])
+            # rectifier_rate_voltage = str((rectifier1_output_voltage+rectifier2_output_voltage+rectifier3_output_voltage)/3)
             
             # rectifier1_status = data["rectifier1_status"]
             rectifier1_serial_number = data["rectifier1_serial_number"]
@@ -383,8 +383,8 @@ def snmp_process():
                 "total_dc_load_power":total_dc_load_power,
                 "dc_energy_consumption":dc_energy_consumption,
                 "rectifier_quantity":rectifier_quantity,
-                "rectifier_current":rectifier_current,
-                "rectifier_rate_voltage":rectifier_rate_voltage,
+                # "rectifier_current":rectifier_current,
+                # "rectifier_rate_voltage":rectifier_rate_voltage,
                 "rectifier1_serial_number":rectifier1_serial_number,
                 "rectifier2_serial_number":rectifier2_serial_number,
                 "rectifier3_serial_number":rectifier3_serial_number,
