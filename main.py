@@ -92,9 +92,10 @@ parameter_dict = {
   "rectifier3_power":["rectNum","1.3.6.1.4.1.40211.8.1.1.5.3"],
   "rectifier3_temperature":["rectNum","1.3.6.1.4.1.40211.8.1.1.6.3"],
   "rectifier3_serial_number":["rectNum","1.3.6.1.4.1.40211.8.1.1.8.3"],
-  "rectifier2_status":["onoffStatus","1.3.6.1.4.1.40211.8.1.1.7.3"],
+  "rectifier3_status":["onoffStatus","1.3.6.1.4.1.40211.8.1.1.7.3"],
+  
   "battery_charging_status":["psStatusBatteryMode","1.3.6.1.4.1.40211.2.1.1.5.0"],
-"total_battery_current":["psBatteryCurrent","1.3.6.1.4.1.40211.3.1.1.1.0"],
+  "total_battery_current":["psBatteryCurrent","1.3.6.1.4.1.40211.3.1.1.1.0"],
 }
 
 
