@@ -51,9 +51,9 @@ parameter_dict = {
 #   "total_dc_load_power":["battEnergy","1.3.6.1.4.1.40211.3.1.1.21.0"],
 
  
-#   "battery_current_1":["psBatteryCurrent1","1.3.6.1.4.1.40211.3.1.1.2.0"],
-#   "battery_current_2":["psBatteryCurrent2","1.3.6.1.4.1.40211.3.1.1.3.0"],
-#   "total_battery_current":["psBatteryCurrent","1.3.6.1.4.1.40211.3.1.1.1.0"],
+  "battery1_current":["psBatteryCurrent1","1.3.6.1.4.1.40211.3.1.1.2.0"],
+  "battery2_current":["psBatteryCurrent2","1.3.6.1.4.1.40211.3.1.1.3.0"],
+  "total_battery_current":["psBatteryCurrent","1.3.6.1.4.1.40211.3.1.1.1.0"],
 #   "battery_capacity_1":["psBatteryCapacity1","1.3.6.1.4.1.40211.3.1.1.4.0"],
 #   "battery_capacity_2":["psBatteryCapacity2","1.3.6.1.4.1.40211.3.1.1.5.0"],
   "dc_energy_consumption":["battEnergy","1.3.6.1.4.1.40211.3.1.1.21.0"],
@@ -318,7 +318,7 @@ def snmp_process():
                         val = convert_decimal(val.prettyPrint())
                         data[param_name] = val
                     elif param_name in list_volt_2:
-                        val = convert_decimal(val.prettyPrint())
+                        val = convert_decimal_2(val.prettyPrint())
                         data[param_name] = val
                     else:
                         data[param_name] = val.prettyPrint()
@@ -376,8 +376,11 @@ def snmp_process():
             rectifier2_temperature = data["rectifier2_temperature"]
             rectifier3_temperature = data["rectifier3_temperature"]
             # battery_disconnect_status = data["battery_disconnect_status"]
-            # total_battery_current = data["total_battery_current"]
-            # battery_current = data["battery_current"]
+            
+            battery1_current = data["battery1_current"]
+            battery2_current = data["battery2_current"]
+            total_battery_current = data["total_battery_current"]
+            
             # total_rate_capacity = data["total_rate_capacity"]
             # toal_remaining_capacity = data["toal_remaining_capacity"]
             # total_remaining_capacity_percent = data["total_remaining_capacity_percent"]
@@ -409,9 +412,9 @@ def snmp_process():
                 "rectifier1_temperature":rectifier1_temperature,
                 "rectifier2_temperature":rectifier2_temperature,
                 "rectifier3_temperature":rectifier3_temperature,
-                # "site_id":site_id,
-                # "site_id":site_id,
-                # "site_id":site_id,
+                "battery1_current":battery1_current,
+                "battery2_current":battery2_current,
+                "total_battery_cuurrent":total_battery_current,
                 # "site_id":site_id,
                 # "site_id":site_id,
                 # "site_id":site_id,
