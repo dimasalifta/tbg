@@ -117,7 +117,10 @@ list_volt = [
              "rectifier3_output_current",
              "rectifier1_output_voltage",
              "rectifier2_output_voltage",
-             "rectifier3_output_voltage"
+             "rectifier3_output_voltage",
+             "rectifier1_temperature",
+             "rectifier2_temperature",
+             "rectifier3_temperature"
              ]
 # slave address (in decimal)
 DEVICE_ADDRESS_SHT20 = 1
@@ -357,7 +360,9 @@ def snmp_process():
             # rectifier_status = data["rectifier_status"]
             total_ac_input_power = rs485_data["total_ac_input_power"]
             # rectifier_load_usage = data["rectifier_load_usage"]
-            # rectifier_temperature = data["rectifier_temperature"]
+            rectifier1_temperature = data["rectifier1_temperature"]
+            rectifier2_temperature = data["rectifier2_temperature"]
+            rectifier3_temperature = data["rectifier3_temperature"]
             # battery_disconnect_status = data["battery_disconnect_status"]
             # total_battery_current = data["total_battery_current"]
             # battery_current = data["battery_current"]
@@ -389,6 +394,9 @@ def snmp_process():
                 "rectifier1_serial_number":rectifier1_serial_number,
                 "rectifier2_serial_number":rectifier2_serial_number,
                 "rectifier3_serial_number":rectifier3_serial_number,
+                "rectifier1_temperature":rectifier1_temperature,
+                "rectifier2_temperature":rectifier2_temperature,
+                "rectifier3_temperature":rectifier3_temperature,
                 # "site_id":site_id,
                 # "site_id":site_id,
                 # "site_id":site_id,
