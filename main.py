@@ -317,15 +317,15 @@ def snmp_process():
             battery1_temperature = data["battery1_temperature"]
             battery2_temperature = data["battery2_temperature"]
             
-            load_current_1 = int(data["load_current_1"])
-            load_current_2 = int(data["load_current_2"])
-            load_current_3 = int(data["load_current_3"])
-            load_current_4 = int(data["load_current_4"])
+            load_current_1 = float(data["load_current_1"])
+            load_current_2 = float(data["load_current_2"])
+            load_current_3 = float(data["load_current_3"])
+            load_current_4 = float(data["load_current_4"])
             total_dc_load_current =str(load_current_1+load_current_2+load_current_3+load_current_4)
-            load_power_1 = int(data["load_power_1"])
-            load_power_2 = int(data["load_power_2"])
-            load_power_3 = int(data["load_power_3"])
-            load_power_4 = int(data["load_power_4"])
+            load_power_1 = float(data["load_power_1"])
+            load_power_2 = float(data["load_power_2"])
+            load_power_3 = float(data["load_power_3"])
+            load_power_4 = float(data["load_power_4"])
             total_dc_load_power =str(load_power_1+load_power_2+load_power_3+load_power_4)
             dc_energy_consumption = data["dc_energy_consumption"]
             # rectifier_quantity = data["rectifier_slots"]
