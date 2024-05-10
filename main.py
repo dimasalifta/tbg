@@ -303,6 +303,7 @@ def snmp_process():
             l2_current = rs485_data["l2_current"]
             l3_current = rs485_data["l3_current"]
             ac_energy_consumption = rs485_data["ac_energy_consumption"]
+            dc_output_voltage = data["dc_output_voltage"]
             # backup_time = data["backup_time"]
             battery1_temperature = data["battery1_temperature"]
             battery2_temperature = data["battery2_temperature"]
@@ -340,9 +341,11 @@ def snmp_process():
                 "l3_current":l3_current,
                 "ac_energy_consumption":ac_energy_consumption,
                 "total_ac_input_power":total_ac_input_power,
+                "dc_output_voltage":dc_output_voltage,
+                # "backup_time" : backup_time,
                 "battery1_temperature":battery1_temperature,
                 "battery2_temperature":battery2_temperature,
-                # "site_id":site_id,
+                
                 # "site_id":site_id,
                 # "site_id":site_id,
                 # "site_id":site_id,
