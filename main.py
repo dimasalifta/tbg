@@ -114,13 +114,7 @@ list_volt = [
              "load_power_2",
              "load_power_3",
              "load_power_4",
-             "dc_energy_consumption",
-            #  "rectifier1_load_usage",
-            #  "rectifier2_load_usage",
-            #  "rectifier3_load_usage",
-            #  "total_rate_capacity",
-            #  "battery1_capacity",
-            #  "battery2_capacity",
+             "dc_energy_consumption"
              ]
 
 list_volt_2 = [
@@ -132,8 +126,7 @@ list_volt_2 = [
              "rectifier3_output_voltage",
              "rectifier1_temperature",
              "rectifier2_temperature",
-             "rectifier3_temperature",
-
+             "rectifier3_temperature"
              ]
 # slave address (in decimal)
 DEVICE_ADDRESS_SHT20 = 1
@@ -402,7 +395,10 @@ def snmp_process():
             total_remaining_capacity_percent = (battery1_capacity+battery2_capacity)/2
 
             total_remaining_capacity = total_rate_capacity * (total_remaining_capacity_percent / 100)
-            backup_time = total_remaining_capacity / float(total_dc_load_current)
+            if total_dc_load_current != 0 :
+                backup_time = total_remaining_capacity / float(total_dc_load_current)
+            else:
+                backup_time = 0
             parameter_tbg = {
                 "site_id":site_id,
                 "system_type":system_type,
