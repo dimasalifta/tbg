@@ -27,13 +27,13 @@ parameter_dict = {
 #   
 
 
-  "phase_l1_voltage": ["psInputLineAVoltage","1.3.6.1.4.1.40211.4.1.1.1.0"], 
-  "phase_l2_voltage": ["psInputLineBVoltage","1.3.6.1.4.1.40211.4.1.1.2.0"],
-  "phase_l3_voltage": ["psInputLineCVoltage","1.3.6.1.4.1.40211.4.1.1.3.0"],
+#   "phase_l1_voltage": ["psInputLineAVoltage","1.3.6.1.4.1.40211.4.1.1.1.0"], 
+#   "phase_l2_voltage": ["psInputLineBVoltage","1.3.6.1.4.1.40211.4.1.1.2.0"],
+#   "phase_l3_voltage": ["psInputLineCVoltage","1.3.6.1.4.1.40211.4.1.1.3.0"],
 
-  "phase_l1_current": ["psInputLineAVoltage","1.3.6.1.4.1.40211.4.1.1.1.0"],
-  "phase_l2_current": ["psInputLineBVoltage","1.3.6.1.4.1.40211.4.1.1.2.0"],
-  "phase_l3_current": ["psInputLineCVoltage","1.3.6.1.4.1.40211.4.1.1.3.0"],
+#   "phase_l1_current": ["psInputLineAVoltage","1.3.6.1.4.1.40211.4.1.1.1.0"],
+#   "phase_l2_current": ["psInputLineBVoltage","1.3.6.1.4.1.40211.4.1.1.2.0"],
+#   "phase_l3_current": ["psInputLineCVoltage","1.3.6.1.4.1.40211.4.1.1.3.0"],
 #   "phase_frequency": ["psInputFrequency","1.3.6.1.4.1.40211.4.1.1.4.0"],
   "dc_output_voltage":["systemVoltage","1.3.6.1.4.1.40211.2.1.1.2.0"],
   "battery_capacity_ah_1":["battAH","1.3.6.1.4.1.40211.2.1.1.11.0"],
@@ -43,12 +43,12 @@ parameter_dict = {
 #   "load_current_2":["loadCurr2","1.3.6.1.4.1.40211.3.1.1.7.0"],
 #   "load_current_3":["loadCurr2","1.3.6.1.4.1.40211.3.1.1.8.0"],
 #   "load_current_4":["loadCurr3","1.3.6.1.4.1.40211.3.1.1.9.0"],
-  "total_load_current":["psBatteryCurrent","1.3.6.1.4.1.40211.3.1.1.1.0"],
+  "total_dc_load_current":["psBatteryCurrent","1.3.6.1.4.1.40211.3.1.1.1.0"],
 #   "load_power_1":["load1Energy","1.3.6.1.4.1.40211.3.1.1.17.0"],
 #   "load_power_2":["load2Energy","1.3.6.1.4.1.40211.3.1.1.18.0"],
 #   "load_power_3":["load3Energy","1.3.6.1.4.1.40211.3.1.1.19.0"],
 #   "load_power_4":["load4Energy","1.3.6.1.4.1.40211.3.1.1.20.0"],
-  "total_load_power":["battEnergy","1.3.6.1.4.1.40211.3.1.1.21.0"],
+  "total_dc_load_power":["battEnergy","1.3.6.1.4.1.40211.3.1.1.21.0"],
 
  
 #   "battery_current_1":["psBatteryCurrent1","1.3.6.1.4.1.40211.3.1.1.2.0"],
@@ -59,14 +59,14 @@ parameter_dict = {
   "dc_energy_consumption":["battEnergy","1.3.6.1.4.1.40211.3.1.1.21.0"],
 #   "battery_slots":["battNum","1.3.6.1.4.1.40211.3.1.1.10.0"],
   
-#   "battery_temperature_1":["psTemperature1","1.3.6.1.4.1.40211.5.1.1.1.0"],
-#   "battery_temperature_2":["psTemperature2","1.3.6.1.4.1.40211.5.1.1.2.0"],
+  "battery1_temperature":["psTemperature1","1.3.6.1.4.1.40211.5.1.1.1.0"],
+  "battery2_temperature":["psTemperature2","1.3.6.1.4.1.40211.5.1.1.2.0"],
 
   "rectifier_total_current":["rectNum","1.3.6.1.4.1.40211.8.1.1.8.3"],
   "rectifier_rate_voltage":["rectNum","1.3.6.1.4.1.40211.8.1.1.8.3"], 
 #   "rectifier_status":["rectNum","1.3.6.1.4.1.40211.8.1.1.8.3"],
   
-#   "rectifier_slots":["rectNum","1.3.6.1.4.1.40211.8.2.1.8.0"],
+  "rectifier_slots":["rectNum","1.3.6.1.4.1.40211.8.2.1.8.0"],
 #   "rectifier_1_address":["rectNum","1.3.6.1.4.1.40211.8.1.1.1.1"],
 #   "rectifier_1_input_voltage":["rectNum","1.3.6.1.4.1.40211.8.1.1.2.1"],
   "rectifier_1_output_voltage":["rectNum","1.3.6.1.4.1.40211.8.1.1.3.1"],
@@ -297,19 +297,19 @@ def snmp_process():
             site_id = data["site_id"]
             system_type = data["system_type"]
             l1_voltage = rs485_data["l1_voltage"]
-            l1_voltage = rs485_data["l1_voltage"]
-            l1_voltage = rs485_data["l1_voltage"]
-            l1_voltage = rs485_data["l1_voltage"]
-            l1_voltage = rs485_data["l1_voltage"]
-            l1_voltage = rs485_data["l1_voltage"]
-            l1_voltage = rs485_data["l1_voltage"]
-            backup_time = data["backup_time"]
+            l2_voltage = rs485_data["l2_voltage"]
+            l3_voltage = rs485_data["l3_voltage"]
+            l1_current = rs485_data["l1_current"]
+            l2_current = rs485_data["l2_current"]
+            l3_current = rs485_data["l3_current"]
+            # l1_voltage = rs485_data["l1_voltage"]
+            # backup_time = data["backup_time"]
             battery1_temperature = data["battery1_temperature"]
             battery2_temperature = data["battery2_temperature"]
             total_dc_load_current = data["total_dc_load_current"]
             total_dc_load_power = data["total_dc_load_power"]
             dc_energy_consumption = data["dc_energy_consumption"]
-            rectifier_quantity = data["rectifier_quantity"]
+            rectifier_quantity = data["rectifier_slots"]
             rectifier_current = data["rectifier_current"]
             rectifier_rate_voltage = data["rectifier_rate_voltage"]
             rectifier1_status = data["rectifier1_status"]
@@ -330,7 +330,17 @@ def snmp_process():
             total_remaining_capacity_percent = data["total_remaining_capacity_percent"]
             
             parameter_tbg = {
-                "site_id":site_id
+                "site_id":site_id,
+                "system_type":system_type,
+                "l1_voltage":l1_voltage,
+                "l2_voltage":l2_voltage,
+                "l3_voltage":l3_voltage,
+                "l1_current":l1_current,
+                "l2_current":l2_current,
+                "l3_current":l3_current,
+                # "site_id":site_id,
+
+                
             }
             print(parameter_tbg)
             
