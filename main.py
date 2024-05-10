@@ -372,7 +372,7 @@ def snmp_process():
             rectifier2_serial_number = data["rectifier2_serial_number"]
             rectifier3_status = data["rectifier3_status"]
             rectifier3_serial_number = data["rectifier3_serial_number"]
-            rectifier_status = data["rectifier_status"]
+ 
             total_ac_input_power = rs485_data["total_ac_input_power"]
             # rectifier_load_usage = data["rectifier_load_usage"]
             rectifier1_temperature = data["rectifier1_temperature"]
