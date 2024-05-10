@@ -187,12 +187,13 @@ def int_to_float(data):
     # Bulatkan nilai float menjadi 3 angka di belakang koma
     rounded_float_value = round(float_value, 3)
     return rounded_float_value
-# def hitung_backup_time(kapasitas_baterai_Ah, beban_Watt):
-#     kapasitas_baterai = 100 # Ah
-#     beban = 500 # Watt
-#     konsumsi_daya_Watt = beban_Watt
-#     backup_time_hours = kapasitas_baterai_Ah / konsumsi_daya_Watt
-#     return backup_time_hours
+
+def hitung_backup_time(kapasitas_baterai_Ah, beban_Watt):
+    kapasitas_baterai = 100 # Ah
+    beban = 500 # Watt
+    konsumsi_daya_Watt = beban_Watt
+    backup_time_hours = kapasitas_baterai_Ah / konsumsi_daya_Watt
+    return backup_time_hours
 
 def read_rs485():
     try:
@@ -297,7 +298,7 @@ def snmp_process():
             payload = json.dumps(data)
             
             # Mengirim payload JSON ke broker MQTT
-            on_publish(payload)
+            on_publish(payload)                                                                                                                                                  
             time.sleep(5)
         except Exception as e:
             print("Exception:", e)
