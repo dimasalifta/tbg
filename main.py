@@ -118,7 +118,7 @@ list_volt = [
             #  "rectifier1_load_usage",
             #  "rectifier2_load_usage",
             #  "rectifier3_load_usage",
-             "total_rate_capacity",
+            #  "total_rate_capacity",
              "battery1_capacity",
              "battery2_capacity",
              ]
