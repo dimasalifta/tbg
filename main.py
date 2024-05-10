@@ -36,7 +36,7 @@ parameter_dict = {
 #   "phase_l3_current": ["psInputLineCVoltage","1.3.6.1.4.1.40211.4.1.1.3.0"],
 #   "phase_frequency": ["psInputFrequency","1.3.6.1.4.1.40211.4.1.1.4.0"],
   "dc_output_voltage":["systemVoltage","1.3.6.1.4.1.40211.2.1.1.2.0"],
-  "battery_capacity_ah_1":["battAH","1.3.6.1.4.1.40211.2.1.1.11.0"],
+  "total_rate_capacity":["battAH","1.3.6.1.4.1.40211.2.1.1.11.0"],
 #   "battery_capacity_ah_2":["battAH","1.3.6.1.4.1.40211.2.1.1.11.1"],
   
   "load_current_1":["loadCurr1","1.3.6.1.4.1.40211.3.1.1.6.0"],
@@ -54,8 +54,8 @@ parameter_dict = {
   "battery1_current":["psBatteryCurrent1","1.3.6.1.4.1.40211.3.1.1.2.0"],
   "battery2_current":["psBatteryCurrent2","1.3.6.1.4.1.40211.3.1.1.3.0"],
   "total_battery_current":["psBatteryCurrent","1.3.6.1.4.1.40211.3.1.1.1.0"],
-#   "battery_capacity_1":["psBatteryCapacity1","1.3.6.1.4.1.40211.3.1.1.4.0"],
-#   "battery_capacity_2":["psBatteryCapacity2","1.3.6.1.4.1.40211.3.1.1.5.0"],
+  "battery1_capacity":["psBatteryCapacity1","1.3.6.1.4.1.40211.3.1.1.4.0"],
+  "battery2_capacity":["psBatteryCapacity2","1.3.6.1.4.1.40211.3.1.1.5.0"],
   "dc_energy_consumption":["battEnergy","1.3.6.1.4.1.40211.3.1.1.21.0"],
 #   "battery_slots":["battNum","1.3.6.1.4.1.40211.3.1.1.10.0"],
   
@@ -338,7 +338,7 @@ def snmp_process():
             l3_current = rs485_data["l3_current"]
             ac_energy_consumption = rs485_data["ac_energy_consumption"]
             dc_output_voltage = data["dc_output_voltage"]
-            # backup_time = data["backup_time"]
+            
             battery1_temperature = data["battery1_temperature"]
             battery2_temperature = data["battery2_temperature"]
             
@@ -388,10 +388,14 @@ def snmp_process():
             battery2_current = data["battery2_current"]
             total_battery_current = data["total_battery_current"]
             
-            # total_rate_capacity = data["total_rate_capacity"]
-            # toal_remaining_capacity = data["toal_remaining_capacity"]
-            # total_remaining_capacity_percent = data["total_remaining_capacity_percent"]
+            total_rate_capacity = data["total_rate_capacity"] # unit Ah
             
+            battery1_capacity = int(data["battery1_capacity"]) # %
+            battery2_capacity = int(data["battery2_capacity"]) # %
+            total_remaining_capacity_percent = (battery1_capacity+battery2_capacity)/2
+
+            total_remaining_capacity = total_rate_capacity * (total_remaining_capacity_percent / 100)
+            backup_time = total_remaining_capacity / float(total_dc_load_power)
             parameter_tbg = {
                 "site_id":site_id,
                 "system_type":system_type,
@@ -404,7 +408,7 @@ def snmp_process():
                 "ac_energy_consumption":ac_energy_consumption,
                 "total_ac_input_power":total_ac_input_power,
                 "dc_output_voltage":dc_output_voltage,
-                # "backup_time" : backup_time,
+                
                 "battery1_temperature":battery1_temperature,
                 "battery2_temperature":battery2_temperature,
                 "total_dc_load_current":total_dc_load_current,
@@ -428,10 +432,10 @@ def snmp_process():
                 "battery1_current":battery1_current,
                 "battery2_current":battery2_current,
                 "total_battery_current":total_battery_current,
-                # "site_id":site_id,
-                # "site_id":site_id,
-                # "site_id":site_id,
-
+                "total_rate_capacity":total_rate_capacity,
+                "total_remaining_capacity":total_remaining_capacity,
+                "total_remaining_capacity_percent":total_remaining_capacity_percent,
+                "backup_time" : backup_time,
                 
             }
             
