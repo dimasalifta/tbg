@@ -298,6 +298,7 @@ def snmp_process():
             site_id = data["site_id"]
             system_type = data["system_type"]
             l1_voltage = rs485_data["l1_voltage"]
+            print(type(l1_voltage))
             l2_voltage = rs485_data["l2_voltage"]
             l3_voltage = rs485_data["l3_voltage"]
             l1_current = rs485_data["l1_current"]
