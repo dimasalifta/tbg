@@ -102,7 +102,16 @@ list_volt = [
              "battery1_temperature",
              "battery2_temperature",
              "battery_capacity_ah_1",
-             "battery_capacity_ah_2"]
+             "battery_capacity_ah_2",
+             "load_current_1",
+             "load_current_2",
+             "load_current_3",
+             "load_current_4",
+             "load_power_1",
+             "load_power_2",
+             "load_power_3",
+             "load_power_4",
+             "dc_energy_consumption"]
 # slave address (in decimal)
 DEVICE_ADDRESS_SHT20 = 1
 DEVICE_ADDRESS_ENERGY_METER = 2
