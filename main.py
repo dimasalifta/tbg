@@ -21,7 +21,7 @@ parameter_dict = {
   "site_id": ["identName","1.3.6.1.4.1.40211.1.1.1.4.0"],
   "system_type": ["identModel","1.3.6.1.4.1.40211.1.1.1.2.0"],
 #   "system_type": ["identInternalVersion","1.3.6.1.4.1.402141.1.1.1.5.0"],
-#   "system_alarm_status":["systemStatus","1.3.6.1.4.1.40211.2.1.1.1.0"],
+  "system_alarm_status":["systemStatus","1.3.6.1.4.1.40211.2.1.1.1.0"],
 
 #   "system_current":["systemCurrent","1.3.6.1.4.1.40211.2.1.1.3.0"],
 #   
@@ -399,6 +399,9 @@ def snmp_process():
             #     backup_time = total_remaining_capacity / float(total_dc_load_current)
             # else:
             backup_time = 0
+            
+            system_alarm_status = data["system_alarm_status"]
+            battery_charging_status = data["battery_charging_status"]
             parameter_tbg = {
                 "site_id":site_id,
                 "system_type":system_type,
@@ -439,6 +442,8 @@ def snmp_process():
                 "total_remaining_capacity":total_remaining_capacity,
                 "total_remaining_capacity_percent":total_remaining_capacity_percent,
                 "backup_time" : backup_time,
+                "system_alarm_status" : system_alarm_status,
+                "battery_charging_status" : battery_charging_status,
                 
             }
             
