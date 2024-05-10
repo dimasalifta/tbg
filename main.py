@@ -230,7 +230,7 @@ def on_message(client, userdata, msg):
     print("Received message on topic:", msg.topic)
     try:
         print("Received payload:")
-        print(msg.payload)
+        # print(msg.payload)
         
     except ValueError:
         # Jika payload tidak bisa diuraikan sebagai JSON, cetak sebagai string biasa
@@ -291,9 +291,49 @@ def snmp_process():
                         data[param_name] = val
                     else:
                         data[param_name] = val.prettyPrint()
-
-            print(read_rs485())
-            print(data)
+            rs485_data = read_rs485()
+            # print(rs485_data)
+            # print(data)           
+            site_id = data["site_id"]
+            system_type = data["system_type"]
+            l1_voltage = rs485_data["l1_voltage"][0]
+            l1_voltage = rs485_data["l1_voltage"][0]
+            l1_voltage = rs485_data["l1_voltage"][0]
+            l1_voltage = rs485_data["l1_voltage"][0]
+            l1_voltage = rs485_data["l1_voltage"][0]
+            l1_voltage = rs485_data["l1_voltage"][0]
+            l1_voltage = rs485_data["l1_voltage"][0]
+            backup_time = data["backup_time"]
+            battery1_temperature = data["battery1_temperature"]
+            battery2_temperature = data["battery2_temperature"]
+            total_dc_load_current = data["total_dc_load_current"]
+            total_dc_load_power = data["total_dc_load_power"]
+            dc_energy_consumption = data["dc_energy_consumption"]
+            rectifier_quantity = data["rectifier_quantity"]
+            rectifier_current = data["rectifier_current"]
+            rectifier_rate_voltage = data["rectifier_rate_voltage"]
+            rectifier1_status = data["rectifier1_status"]
+            rectifier1_serial_number = data["rectifier1_serial_number"]
+            rectifier2_status = data["rectifier2_status"]
+            rectifier2_serial_number = data["rectifier2_serial_number"]
+            rectifier3_status = data["rectifier3_status"]
+            rectifier3_serial_number = data["rectifier3_serial_number"]
+            rectifier_status = data["rectifier_status"]
+            total_ac_input_power = rs485_data["total_ac_input_power"]
+            rectifier_load_usage = data["rectifier_load_usage"]
+            rectifier_temperature = data["rectifier_temperature"]
+            battery_disconnect_status = data["battery_disconnect_status"]
+            total_battery_current = data["total_battery_current"]
+            battery_current = data["battery_current"]
+            total_rate_capacity = data["total_rate_capacity"]
+            toal_remaining_capacity = data["toal_remaining_capacity"]
+            total_remaining_capacity_percent = data["total_remaining_capacity_percent"]
+            
+            parameter_tbg = {
+                "site_id":site_id
+            }
+            print(parameter_tbg)
+            
             # Mengonversi data menjadi format JSON
             payload = json.dumps(data)
             
