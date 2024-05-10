@@ -152,7 +152,7 @@ list_register_energy_meter = {
     "l2_current" : [10," A"],
     "l3_current" : [12," A"],
     
-    "total_power" : [16," kW"],
+    "total_ac_input_power" : [16," kW"],
     "l1_power" : [18," kW"],
     "l2_power" : [20," kW"],
     "l3_power" : [22," kW"],
@@ -319,7 +319,7 @@ def snmp_process():
             # rectifier3_status = data["rectifier3_status"]
             # rectifier3_serial_number = data["rectifier3_serial_number"]
             # rectifier_status = data["rectifier_status"]
-            # total_ac_input_power = rs485_data["total_ac_input_power"]
+            total_ac_input_power = rs485_data["total_ac_input_power"]
             # rectifier_load_usage = data["rectifier_load_usage"]
             # rectifier_temperature = data["rectifier_temperature"]
             # battery_disconnect_status = data["battery_disconnect_status"]
@@ -339,7 +339,7 @@ def snmp_process():
                 "l2_current":l2_current,
                 "l3_current":l3_current,
                 "ac_energy_consumption":ac_energy_consumption,
-                # "site_id":site_id,
+                "total_ac_input_power":total_ac_input_power,
                 "battery1_temperature":battery1_temperature,
                 "battery2_temperature":battery2_temperature,
                 # "site_id":site_id,
