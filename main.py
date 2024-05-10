@@ -296,9 +296,7 @@ def snmp_process():
             # print(data)           
             site_id = data["site_id"]
             system_type = data["system_type"]
-            print("1")
             l1_voltage = rs485_data["l1_voltage"]
-            print("2")
             l2_voltage = rs485_data["l2_voltage"]
             l3_voltage = rs485_data["l3_voltage"]
             l1_current = rs485_data["l1_current"]
@@ -331,21 +329,22 @@ def snmp_process():
             # toal_remaining_capacity = data["toal_remaining_capacity"]
             # total_remaining_capacity_percent = data["total_remaining_capacity_percent"]
             
-            # parameter_tbg = {
-            #     "site_id":site_id,
-            #     "system_type":system_type,
-            #     "l1_voltage":l1_voltage,
-            #     "l2_voltage":l2_voltage,
-            #     "l3_voltage":l3_voltage,
-            #     "l1_current":l1_current,
-            #     "l2_current":l2_current,
-            #     "l3_current":l3_current
-            #     # "site_id":site_id,
+            parameter_tbg = {
+                "site_id":site_id,
+                "system_type":system_type,
+                "l1_voltage":l1_voltage,
+                "l2_voltage":l2_voltage,
+                "l3_voltage":l3_voltage,
+                "l1_current":l1_current,
+                "l2_current":l2_current,
+                "l3_current":l3_current
+                # "site_id":site_id,
 
                 
-            # }
+            }
             
-            # pretty_parameter_tbg = json.dumps(parameter_tbg, indent=4)
+            pretty_parameter_tbg = json.dumps(parameter_tbg, indent=4)
+            print(pretty_parameter_tbg)
             # print(parameter_tbg)
             # Mengonversi data menjadi format JSON
             payload = json.dumps(data)
