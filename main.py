@@ -292,8 +292,7 @@ def snmp_process():
                     else:
                         data[param_name] = val.prettyPrint()
                         
-            rs485_data = json.dumps(read_rs485(), indent=4)
-            print(rs485_data)
+            rs485_data = read_rs485()
             # print(data)           
             site_id = data["site_id"]
             system_type = data["system_type"]
