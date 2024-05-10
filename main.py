@@ -112,12 +112,13 @@ list_volt = [
              "load_power_3",
              "load_power_4",
              "dc_energy_consumption",
-             "rectifier1_output_current",
-             "rectifier2_output_current",
-             "rectifier3_output_current",
-             "rectifier1_output_voltage",
-             "rectifier2_output_voltage",
-             "rectifier3_output_voltage"]
+            #  "rectifier1_output_current",
+            #  "rectifier2_output_current",
+            #  "rectifier3_output_current",
+            #  "rectifier1_output_voltage",
+            #  "rectifier2_output_voltage",
+            #  "rectifier3_output_voltage"
+             ]
 # slave address (in decimal)
 DEVICE_ADDRESS_SHT20 = 1
 DEVICE_ADDRESS_ENERGY_METER = 2
