@@ -71,7 +71,7 @@ parameter_dict = {
 #   "rectifier_1_input_voltage":["rectNum","1.3.6.1.4.1.40211.8.1.1.2.1"],
   "rectifier1_output_voltage":["rectNum","1.3.6.1.4.1.40211.8.1.1.3.1"],
   "rectifier1_output_current":["rectNum","1.3.6.1.4.1.40211.8.1.1.4.1"],
-  "rectifier1_power":["rectNum","1.3.6.1.4.1.40211.8.1.1.5.1"],
+  "rectifier1_load_usage":["rectNum","1.3.6.1.4.1.40211.8.1.1.5.1"],
   "rectifier1_temperature":["rectNum","1.3.6.1.4.1.40211.8.1.1.6.1"],
   "rectifier1_serial_number":["rectNum","1.3.6.1.4.1.40211.8.1.1.8.1"],
   "rectifier1_status":["onoffStatus","1.3.6.1.4.1.40211.8.1.1.7.1"],
@@ -81,7 +81,7 @@ parameter_dict = {
 #   "rectifier_2_input_voltage":["rectNum","1.3.6.1.4.1.40211.8.1.1.2.2"],
   "rectifier2_output_voltage":["rectNum","1.3.6.1.4.1.40211.8.1.1.3.2"],
   "rectifier2_output_current":["rectNum","1.3.6.1.4.1.40211.8.1.1.4.2"],
-  "rectifier2_power":["rectNum","1.3.6.1.4.1.40211.8.1.1.5.2"],
+  "rectifier2_load_usage":["rectNum","1.3.6.1.4.1.40211.8.1.1.5.2"],
   "rectifier2_temperature":["rectNum","1.3.6.1.4.1.40211.8.1.1.6.2"],
   "rectifier2_serial_number":["rectNum","1.3.6.1.4.1.40211.8.1.1.8.2"],
   "rectifier2_status":["onoffStatus","1.3.6.1.4.1.40211.8.1.1.7.2"],
@@ -89,7 +89,7 @@ parameter_dict = {
 #   "rectifier_3_input_voltage":["rectNum","1.3.6.1.4.1.40211.8.1.1.2.3"],
   "rectifier3_output_voltage":["rectNum","1.3.6.1.4.1.40211.8.1.1.3.3"],
   "rectifier3_output_current":["rectNum","1.3.6.1.4.1.40211.8.1.1.4.3"],
-  "rectifier3_power":["rectNum","1.3.6.1.4.1.40211.8.1.1.5.3"],
+  "rectifier3_load_usage":["rectNum","1.3.6.1.4.1.40211.8.1.1.5.3"],
   "rectifier3_temperature":["rectNum","1.3.6.1.4.1.40211.8.1.1.6.3"],
   "rectifier3_serial_number":["rectNum","1.3.6.1.4.1.40211.8.1.1.8.3"],
   "rectifier3_status":["onoffStatus","1.3.6.1.4.1.40211.8.1.1.7.3"],
@@ -374,7 +374,11 @@ def snmp_process():
             rectifier3_serial_number = data["rectifier3_serial_number"]
  
             total_ac_input_power = rs485_data["total_ac_input_power"]
-            # rectifier_load_usage = data["rectifier_load_usage"]
+
+            rectifier1_load_usage = data["rectifier1_load_usage"]
+            rectifier2_load_usage = data["rectifier2_load_usage"]
+            rectifier3_load_usage = data["rectifier3_load_usage"]
+            
             rectifier1_temperature = data["rectifier1_temperature"]
             rectifier2_temperature = data["rectifier2_temperature"]
             rectifier3_temperature = data["rectifier3_temperature"]
@@ -436,7 +440,7 @@ def snmp_process():
             
             # Mengirim payload JSON ke broker MQTT
             on_publish(pretty_parameter_tbg)                                                                                                                                                  
-            time.sleep(5)
+            time.sleep(2)
         except Exception as e:
             print("Exception:", e)
 
