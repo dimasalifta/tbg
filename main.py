@@ -147,10 +147,10 @@ list_register_energy_meter = {
     "l2_voltage" : [2," V"],
     "l3_voltage" : [4," V"],
 
-    "total_ampere" : [6," A"],
-    "l1_ampere" : [8," A"],
-    "l2_ampere" : [10," A"],
-    "l3_ampere" : [12," A"],
+    "total_current" : [6," A"],
+    "l1_current" : [8," A"],
+    "l2_current" : [10," A"],
+    "l3_current" : [12," A"],
     
     "total_power" : [16," kW"],
     "l1_power" : [18," kW"],
@@ -291,7 +291,8 @@ def snmp_process():
                         data[param_name] = val
                     else:
                         data[param_name] = val.prettyPrint()
-            rs485_data = read_rs485()
+                        
+            rs485_data = json.dumps(read_rs485, indent=4)
             print(rs485_data)
             # print(data)           
             site_id = data["site_id"]
@@ -342,8 +343,9 @@ def snmp_process():
 
                 
             }
-            print(parameter_tbg)
             
+            pretty_parameter_tbg = json.dumps(parameter_tbg, indent=4)
+            print(pretty_parameter_tbg)
             # Mengonversi data menjadi format JSON
             payload = json.dumps(data)
             
