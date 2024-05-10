@@ -306,9 +306,9 @@ def snmp_process():
             # backup_time = data["backup_time"]
             battery1_temperature = data["battery1_temperature"]
             battery2_temperature = data["battery2_temperature"]
-            total_dc_load_current = data["total_dc_load_current"]
-            total_dc_load_power = data["total_dc_load_power"]
-            # dc_energy_consumption = data["dc_energy_consumption"]
+            # total_dc_load_current = data["total_dc_load_current"]
+            # total_dc_load_power = data["total_dc_load_power"]
+            # # dc_energy_consumption = data["dc_energy_consumption"]
             # rectifier_quantity = data["rectifier_slots"]
             # rectifier_current = data["rectifier_current"]
             # rectifier_rate_voltage = data["rectifier_rate_voltage"]
@@ -365,7 +365,7 @@ def snmp_process():
             payload = json.dumps(data)
             
             # Mengirim payload JSON ke broker MQTT
-            on_publish(parameter_tbg)                                                                                                                                                  
+            on_publish(pretty_parameter_tbg)                                                                                                                                                  
             time.sleep(5)
         except Exception as e:
             print("Exception:", e)
