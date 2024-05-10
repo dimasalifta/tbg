@@ -74,6 +74,8 @@ parameter_dict = {
   "rectifier1_power":["rectNum","1.3.6.1.4.1.40211.8.1.1.5.1"],
   "rectifier1_temperature":["rectNum","1.3.6.1.4.1.40211.8.1.1.6.1"],
   "rectifier1_serial_number":["rectNum","1.3.6.1.4.1.40211.8.1.1.8.1"],
+  "rectifier1_status":["onoffStatus","1.3.6.1.4.1.40211.8.1.1.7.1"],
+  
   
 #   "rectifier_2_address":["rectNum","1.3.6.1.4.1.40211.8.1.1.1.2"],
 #   "rectifier_2_input_voltage":["rectNum","1.3.6.1.4.1.40211.8.1.1.2.2"],
@@ -82,7 +84,7 @@ parameter_dict = {
   "rectifier2_power":["rectNum","1.3.6.1.4.1.40211.8.1.1.5.2"],
   "rectifier2_temperature":["rectNum","1.3.6.1.4.1.40211.8.1.1.6.2"],
   "rectifier2_serial_number":["rectNum","1.3.6.1.4.1.40211.8.1.1.8.2"],
-
+  "rectifier2_status":["onoffStatus","1.3.6.1.4.1.40211.8.1.1.7.2"],
 #   "rectifier_3_address":["rectNum","1.3.6.1.4.1.40211.8.1.1.1.3"],
 #   "rectifier_3_input_voltage":["rectNum","1.3.6.1.4.1.40211.8.1.1.2.3"],
   "rectifier3_output_voltage":["rectNum","1.3.6.1.4.1.40211.8.1.1.3.3"],
@@ -90,7 +92,7 @@ parameter_dict = {
   "rectifier3_power":["rectNum","1.3.6.1.4.1.40211.8.1.1.5.3"],
   "rectifier3_temperature":["rectNum","1.3.6.1.4.1.40211.8.1.1.6.3"],
   "rectifier3_serial_number":["rectNum","1.3.6.1.4.1.40211.8.1.1.8.3"],
-
+  "rectifier2_status":["onoffStatus","1.3.6.1.4.1.40211.8.1.1.7.3"],
   "battery_charging_status":["psStatusBatteryMode","1.3.6.1.4.1.40211.2.1.1.5.0"],
 "total_battery_current":["psBatteryCurrent","1.3.6.1.4.1.40211.3.1.1.1.0"],
 }
@@ -200,7 +202,7 @@ def convert_decimal(x):
     return hasil   
 def convert_decimal_2(x):
     angka = int(x)
-    hasil_pembagian = angka / 100
+    hasil_pembagian = angka / 10
     # hasil_bulatan = round(hasil_pembagian)  
     hasil = str(hasil_pembagian)
     return hasil   
@@ -363,13 +365,13 @@ def snmp_process():
             rectifier3_output_voltage = float(data["rectifier3_output_voltage"])
             rectifier_rate_voltage = str((rectifier1_output_voltage+rectifier2_output_voltage+rectifier3_output_voltage)/3)
             
-            # rectifier1_status = data["rectifier1_status"]
+            rectifier1_status = data["rectifier1_status"]
             rectifier1_serial_number = data["rectifier1_serial_number"]
-            # rectifier2_status = data["rectifier2_status"]
+            rectifier2_status = data["rectifier2_status"]
             rectifier2_serial_number = data["rectifier2_serial_number"]
-            # rectifier3_status = data["rectifier3_status"]
+            rectifier3_status = data["rectifier3_status"]
             rectifier3_serial_number = data["rectifier3_serial_number"]
-            # rectifier_status = data["rectifier_status"]
+            rectifier_status = data["rectifier_status"]
             total_ac_input_power = rs485_data["total_ac_input_power"]
             # rectifier_load_usage = data["rectifier_load_usage"]
             rectifier1_temperature = data["rectifier1_temperature"]
@@ -407,14 +409,17 @@ def snmp_process():
                 "rectifier_current":rectifier_current,
                 "rectifier_rate_voltage":rectifier_rate_voltage,
                 "rectifier1_serial_number":rectifier1_serial_number,
+                "rectifier1_status":rectifier1_status,
                 "rectifier2_serial_number":rectifier2_serial_number,
+                "rectifier2_status":rectifier2_status,
                 "rectifier3_serial_number":rectifier3_serial_number,
+                "rectifier3_status":rectifier3_status,
                 "rectifier1_temperature":rectifier1_temperature,
                 "rectifier2_temperature":rectifier2_temperature,
                 "rectifier3_temperature":rectifier3_temperature,
                 "battery1_current":battery1_current,
                 "battery2_current":battery2_current,
-                "total_battery_cuurrent":total_battery_current,
+                "total_battery_current":total_battery_current,
                 # "site_id":site_id,
                 # "site_id":site_id,
                 # "site_id":site_id,
