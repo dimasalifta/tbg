@@ -395,10 +395,10 @@ def snmp_process():
             total_remaining_capacity_percent = (battery1_capacity+battery2_capacity)/2
 
             total_remaining_capacity = total_rate_capacity * (total_remaining_capacity_percent / 100)
-            if total_dc_load_current != 0 :
-                backup_time = total_remaining_capacity / float(total_dc_load_current)
-            else:
-                backup_time = 0
+            # if total_dc_load_current != 0 :
+            #     backup_time = total_remaining_capacity / float(total_dc_load_current)
+            # else:
+            backup_time = 0
             parameter_tbg = {
                 "site_id":site_id,
                 "system_type":system_type,
