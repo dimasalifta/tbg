@@ -72,7 +72,8 @@ list_parameter_megmeet = {
 #   "total_battery_current":["psBatteryCurrent","1.3.6.1.4.1.40211.3.1.1.1.0"],
 }
 
-def snmp_process():
+def read_sensor_data(debug=False):
+    sensor_data = {}
     try:
         cmdGen = cmdgen.CommandGenerator()
         auth = cmdgen.CommunityData('public')
@@ -97,5 +98,13 @@ def snmp_process():
                 print(val)
                 print(oid.prettyPrint(), val.prettyPrint())
                 # Menyimpan nilai ke dalam dictionary data
+        if debug:
+            print("##################################################")
+            print(f"{__file__}")
+            sensor_data = json.dumps(sensor_data, indent=4)
+            print(sensor_data)
+            print("##################################################")
+        return sensor_data
     except Exception as e:
-                print(f"Error Query: {e}")
+        print(f"Error Query: {e}")
+        return sensor_data
