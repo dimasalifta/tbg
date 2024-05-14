@@ -2,7 +2,7 @@
 import sht20
 
 # Read sensor data
-temperature, humidity = sht20.read_sensor_data()
+temperature, humidity = sht20.read_sensor_data(debug=False)
 
 # Display the values of the variables
 
