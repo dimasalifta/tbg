@@ -1,6 +1,6 @@
-from modules import sht20,energy,megmeet
+from modules import rs485_sht20,rs485_energy,snmp_megmeet
+import time
+# Read sensor data
+value = rs485_sht20.read_sensor_data(debug=False)
 
-# Read sensor data
-temperature, humidity = sht20.read_sensor_data(debug=False)
-# Read sensor data
-temperature, humidity = energy.read_sensor_data(debug=False)
+print(value)
