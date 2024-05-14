@@ -1,13 +1,14 @@
 import sys
 from pysnmp.entity.rfc3413.oneliner import cmdgen
 import json
+import numpy as np
 
 list_parameter_megmeet = {
-  "site_id": ["identName","1.3.6.1.4.1.40211.1.1.1.4.0"," "],
-  "system_alarm_status":["systemStatus","1.3.6.1.4.1.40211.2.1.1.1.0"," "],
-  "system_voltage":["systemVoltage","1.3.6.1.4.1.40211.2.1.1.2.0", "mV"],
-  "system_current":["systemCurrent","1.3.6.1.4.1.40211.2.1.1.3.0", "mA"],
-  "battery_charging_state":["psStatusBatteryMode","1.3.6.1.4.1.40211.2.1.1.5.0", " "],
+  "site_id": ["identName","1.3.6.1.4.1.40211.1.1.1.4.0"," ","string"],
+  "system_alarm_status":["systemStatus","1.3.6.1.4.1.40211.2.1.1.1.0","integer"],
+  "system_voltage":["systemVoltage","1.3.6.1.4.1.40211.2.1.1.2.0", "mV", "integer32"],
+  "system_current":["systemCurrent","1.3.6.1.4.1.40211.2.1.1.3.0", "mA", "integer32"],
+  "battery_charging_state":["psStatusBatteryMode","1.3.6.1.4.1.40211.2.1.1.5.0", "integer"],
   
   
 #   "total_rate_capacity":["battAH","1.3.6.1.4.1.40211.2.1.1.11.0"],
@@ -80,7 +81,7 @@ def read_sensor_data(debug=False):
 
         # Inisialisasi dictionary untuk menyimpan data
 
-        for param_name, (signale_name, oid, unit) in list_parameter_megmeet.items():
+        for param_name, (signale_name, oid, unit, val_type) in list_parameter_megmeet.items():
             try:
                 errorIndication, errorStatus, errorIndex, varBinds = cmdGen.getCmd(
                     auth,
@@ -95,6 +96,14 @@ def read_sensor_data(debug=False):
                 print(f"Error Query: {e}")
 
             for oid, val in varBinds:
+                if val_type == "string":
+                    val = np.string_(val)
+                elif val_type == "integer":
+                    val = np.int(val)
+                elif val_type == "integer32":
+                    val = np.int32(val)
+                elif val_type == " ":
+                    val = val
                 print(type(val.prettyPrint()))
                 print(oid.prettyPrint(), val.prettyPrint())
                 sensor_data[param_name] = {"value":val,
