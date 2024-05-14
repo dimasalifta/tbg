@@ -95,6 +95,7 @@ def read_sensor_data(debug=False):
                 print(f"Error Query: {e}")
 
             for oid, val in varBinds:
+                print(type(val))
                 print(oid.prettyPrint(), val.prettyPrint())
                 sensor_data[param_name] = {"value":val,
                                             "unit":unit,
