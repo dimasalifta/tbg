@@ -1,5 +1,6 @@
 
 import minimalmodbus
+import json
 # slave address (in decimal)
 DEVICE_ADDRESS_SHT20 = 1
 
@@ -39,9 +40,15 @@ def read_sensor_data(debug=False):
             address = values[0]  # Ambil alamat register dari elemen pertama dalam daftar
             unit = values[1]     # Ambil unit dari elemen kedua dalam daftar
             value = sht20.read_register(address, REGISTER_NUMBER_DECIMALS_SHT20, ModBus_Command)
-            sensor_data[key] = f"{value}{unit}"
-            if debug:
-                print(f"{key}: {value}{unit}")
+            sensor_data[key] = {"value":{value},
+                                "unit":{unit},
+                                "type":{type(value)}}
+        if debug:
+            print("#"*20)
+            print(f"__file__")
+            sensor_data = json.dumps(sensor_data, indent=4)
+            print(sensor_data)
+            print("#"*20)
         return sensor_data
     except Exception as e:
         print(f"Failed to read from instrument ------ {e}")
