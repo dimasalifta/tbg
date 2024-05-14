@@ -26,13 +26,28 @@ list_parameter_megmeet = {
                             "integer"],
   
   
-#   "total_rate_capacity":["battAH","1.3.6.1.4.1.40211.2.1.1.11.0"],
-#    #"total_rate_capacity_2":["battAH","1.3.6.1.4.1.40211.2.1.1.11.1"],
+  "battery_nominal_capacity":["battAH",
+                              "1.3.6.1.4.1.40211.2.1.1.11.0",
+                              "mAh",
+                              "integer32"],
+
+  "load_current_1":["loadCurr1",
+                    "1.3.6.1.4.1.40211.3.1.1.6.0",
+                    "mA",
+                    "integer32"],
+  "load_current_2":["loadCurr2",
+                    "1.3.6.1.4.1.40211.3.1.1.7.0",
+                    "mA",
+                    "integer32"],
+  "load_current_3":["loadCurr3",
+                    "1.3.6.1.4.1.40211.3.1.1.8.0",
+                    "mA",
+                    "integer32"],
+  "load_current_4":["loadCurr4",
+                    "1.3.6.1.4.1.40211.3.1.1.9.0",
+                    "mA",
+                    "integer32"],
   
-#   "load_current_1":["loadCurr1","1.3.6.1.4.1.40211.3.1.1.6.0"],
-#   "load_current_2":["loadCurr2","1.3.6.1.4.1.40211.3.1.1.7.0"],
-#   "load_current_3":["loadCurr2","1.3.6.1.4.1.40211.3.1.1.8.0"],
-#   "load_current_4":["loadCurr3","1.3.6.1.4.1.40211.3.1.1.9.0"],
 # #   "total_dc_load_current":["psBatteryCurrent","1.3.6.1.4.1.40211.3.1.1.1.0"],
 #   "load_power_1":["load1Energy","1.3.6.1.4.1.40211.3.1.1.17.0"],
 #   "load_power_2":["load2Energy","1.3.6.1.4.1.40211.3.1.1.18.0"],
@@ -111,8 +126,8 @@ def read_sensor_data(debug=False):
                 print(f"Error Query: {e}")
 
             for oid, val in varBinds:
-                print(type(val.prettyPrint()))
-                print(oid.prettyPrint(), val.prettyPrint())
+                # print(type(val.prettyPrint()))
+                # print(oid.prettyPrint(), val.prettyPrint())
                 
                 if val_type == "string":
                     val = str(val)
