@@ -95,9 +95,10 @@ def read_sensor_data(debug=False):
                 print(f"Error Query: {e}")
 
             for oid, val in varBinds:
-                print(val)
                 print(oid.prettyPrint(), val.prettyPrint())
-                # Menyimpan nilai ke dalam dictionary data
+                sensor_data[param_name] = {"value":val,
+                                            "unit":unit,
+                                            "type":f"{type(val)}"}
         if debug:
             print("##################################################")
             print(f"{__file__}")
