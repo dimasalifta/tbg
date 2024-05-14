@@ -66,16 +66,18 @@ def int_to_float(data):
     rounded_float_value = round(float_value, 3)
     return rounded_float_value
 
-try:
-    for key, values in list_register_energy_meter.items():
-        address = values[0]  # Ambil alamat register dari elemen pertama dalam daftar
-        unit = values[1]     # Ambil unit dari elemen kedua dalam daftar
-        value = energy_meter.read_register(address, REGISTER_NUMBER_DECIMALS_ENERGY_METER, ModBus_Command)
-        try:
-            value = int_to_float(value)
-            print(f"{key}: {value}{unit}")
-        except OverflowError:
-            print(f"{value}{unit} Nilai dari {key} terlalu besar untuk dikonversi menjadi float.")
-except Exception as e:
-    print(f"Failed to read from instrument ------ {e}")
-
+def read_sensor_data(debug=False):
+    results = {}
+    try:
+        for key, values in list_register_energy_meter.items():
+            address = values[0]  # Ambil alamat register dari elemen pertama dalam daftar
+            unit = values[1]     # Ambil unit dari elemen kedua dalam daftar
+            value = energy_meter.read_register(address, REGISTER_NUMBER_DECIMALS_ENERGY_METER, ModBus_Command)
+            try:
+                value = int_to_float(value)
+                results[key] = (value, unit)
+            except OverflowError:
+                results[key] = (None, unit, "Nilai terlalu besar untuk dikonversi menjadi float.")
+    except Exception as e:
+        print(f"Failed to read from instrument ------ {e}")
+    return results
