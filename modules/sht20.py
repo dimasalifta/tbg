@@ -33,15 +33,18 @@ for key in list_register_sht20.keys():
     globals()[key] = None
     
 def read_sensor_data(debug=False):
-    results = {}
     try:
         for key, values in list_register_sht20.items():
             address = values[0]  # Ambil alamat register dari elemen pertama dalam daftar
             unit = values[1]     # Ambil unit dari elemen kedua dalam daftar
             value = sht20.read_register(address, REGISTER_NUMBER_DECIMALS_SHT20, ModBus_Command)
-            results[key] = (value, unit)
+            if key == "temperature":
+                temperature = value
+            elif key == "humidity":
+                humidity = value
             if debug:
                 print(f"{key}: {value}{unit}")
+        return temperature, humidity
     except Exception as e:
         print(f"Failed to read from instrument ------ {e}")
-    return results
+
