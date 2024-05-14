@@ -123,7 +123,8 @@ def read_sensor_data(debug=False):
                     print(f"{key}: {value}{unit}")
             except OverflowError:
                 print(f"{value}{unit} Nilai dari {key} terlalu besar untuk dikonversi menjadi float.")
-        return l1_voltage, l2_voltage, l3_voltage,total_current, l1_current, l2_current, l3_current, total_power, l1_power, l2_power, l3_power, total_kvarh, l1_kvarh, l2_kvarh, l3_kvarh, l1_power_factor, l2_power_factor, l3_power_factor, phase_frequency, energy_consumption
+        # return l1_voltage, l2_voltage, l3_voltage,total_current, l1_current, l2_current, l3_current, total_power, l1_power, l2_power, l3_power, total_kvarh, l1_kvarh, l2_kvarh, l3_kvarh, l1_power_factor, l2_power_factor, l3_power_factor, phase_frequency, energy_consumption
+        return phase_frequency, energy_consumption
     except Exception as e:
         print(f"Failed to read from instrument ------ {e}")
 
