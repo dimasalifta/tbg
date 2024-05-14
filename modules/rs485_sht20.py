@@ -42,7 +42,7 @@ def read_sensor_data(debug=False):
             value = sht20.read_register(address, REGISTER_NUMBER_DECIMALS_SHT20, ModBus_Command)
             sensor_data[key] = {"value":{value},
                                 "unit":{unit},
-                                "type":{type(value)}}
+                                "type":f"{type(value)}"}
         if debug:
             print("##################################################")
             print(f"__file__")
