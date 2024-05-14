@@ -40,8 +40,8 @@ def read_sensor_data(debug=False):
             address = values[0]  # Ambil alamat register dari elemen pertama dalam daftar
             unit = values[1]     # Ambil unit dari elemen kedua dalam daftar
             value = sht20.read_register(address, REGISTER_NUMBER_DECIMALS_SHT20, ModBus_Command)
-            sensor_data[key] = {"value":{value},
-                                "unit":{unit},
+            sensor_data[key] = {"value":value,
+                                "unit":unit,
                                 "type":f"{type(value)}"}
         if debug:
             print("##################################################")
