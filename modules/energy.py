@@ -71,55 +71,54 @@ def read_sensor_data(debug=False):
         for key, values in list_register_energy_meter.items():
             address = values[0]  # Ambil alamat register dari elemen pertama dalam daftar
             unit = values[1]     # Ambil unit dari elemen kedua dalam daftar
-            value = energy_meter.read_register(address, REGISTER_NUMBER_DECIMALS_ENERGY_METER, ModBus_Command)
-            if key == "l1_voltage":
-                l1_voltage = value
-            elif key == "l2_voltage":
-                l2_voltage = value
-            elif key == "l3_voltage":
-                l3_voltage = value
-                
-            elif key == "total_current":
-                total_current = value
-            elif key == "l1_current":
-                l1_current = value
-            elif key == "l2_current":
-                l2_current = value
-            elif key == "l3_current":
-                l3_current = value
-            
-            elif key == "total_power":
-                total_power = value
-            elif key == "l1_power":
-                l1_power = value
-            elif key == "l2_power":
-                l2_power = value
-            elif key == "l3_power":
-                l3_power = value
-                
-            elif key == "total_kvarh":
-                total_kvarh = value
-            elif key == "l1_kvarh":
-                l1_kvarh = value
-            elif key == "l2_kvarh":
-                l2_kvarh = value
-            elif key == "l3_kvarh":
-                l3_kvarh = value
-                
-            elif key == "l1_power_factor":
-                l1_power_factor = value
-            elif key == "l2_power_factor":
-                l2_power_factor = value
-            elif key == "l3_power_factor":
-                l3_power_factor = value
-            
-            elif key == "phase_frequency":
-                phase_frequency = value
-            elif key == "energy_consumption":
-                energy_consumption = value
-                
+            value = energy_meter.read_register(address, REGISTER_NUMBER_DECIMALS_ENERGY_METER, ModBus_Command)                
             try:
                 value = int_to_float(value)
+                if key == "l1_voltage":
+                    l1_voltage = value
+                elif key == "l2_voltage":
+                    l2_voltage = value
+                elif key == "l3_voltage":
+                    l3_voltage = value
+                    
+                elif key == "total_current":
+                    total_current = value
+                elif key == "l1_current":
+                    l1_current = value
+                elif key == "l2_current":
+                    l2_current = value
+                elif key == "l3_current":
+                    l3_current = value
+                
+                elif key == "total_power":
+                    total_power = value
+                elif key == "l1_power":
+                    l1_power = value
+                elif key == "l2_power":
+                    l2_power = value
+                elif key == "l3_power":
+                    l3_power = value
+                    
+                elif key == "total_kvarh":
+                    total_kvarh = value
+                elif key == "l1_kvarh":
+                    l1_kvarh = value
+                elif key == "l2_kvarh":
+                    l2_kvarh = value
+                elif key == "l3_kvarh":
+                    l3_kvarh = value
+                    
+                elif key == "l1_power_factor":
+                    l1_power_factor = value
+                elif key == "l2_power_factor":
+                    l2_power_factor = value
+                elif key == "l3_power_factor":
+                    l3_power_factor = value
+                
+                elif key == "phase_frequency":
+                    phase_frequency = value
+                elif key == "energy_consumption":
+                    energy_consumption = value
                 if debug:
                     print(f"{key}: {value}{unit}")
             except OverflowError:
