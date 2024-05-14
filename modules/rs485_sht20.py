@@ -44,11 +44,11 @@ def read_sensor_data(debug=False):
                                 "unit":{unit},
                                 "type":{type(value)}}
         if debug:
-            print("#"*20)
+            print("##################################################")
             print(f"__file__")
             sensor_data = json.dumps(sensor_data, indent=4)
             print(sensor_data)
-            print("#"*20)
+            print("##################################################")
         return sensor_data
     except Exception as e:
         print(f"Failed to read from instrument ------ {e}")
