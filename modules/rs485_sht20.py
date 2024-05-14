@@ -45,7 +45,7 @@ def read_sensor_data(debug=False):
                                 "type":f"{type(value)}"}
         if debug:
             print("##################################################")
-            print(f"__file__")
+            print(f"{__file__}")
             sensor_data = json.dumps(sensor_data, indent=4)
             print(sensor_data)
             print("##################################################")

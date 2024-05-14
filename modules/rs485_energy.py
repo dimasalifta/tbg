@@ -1,6 +1,7 @@
 
 import minimalmodbus
 import struct
+import json
 # slave address (in decimal)
 DEVICE_ADDRESS_ENERGY_METER = 2
 
@@ -67,6 +68,7 @@ def int_to_float(data):
     return rounded_float_value
 
 def read_sensor_data(debug=False):
+    sensor_data = {}
     try:
         for key, values in list_register_energy_meter.items():
             address = values[0]  # Ambil alamat register dari elemen pertama dalam daftar
@@ -74,56 +76,19 @@ def read_sensor_data(debug=False):
             value = energy_meter.read_register(address, REGISTER_NUMBER_DECIMALS_ENERGY_METER, ModBus_Command)                
             try:
                 value = int_to_float(value)
-                if key == "l1_voltage":
-                    l1_voltage = value
-                elif key == "l2_voltage":
-                    l2_voltage = value
-                elif key == "l3_voltage":
-                    l3_voltage = value
-                    
-                elif key == "total_current":
-                    total_current = value
-                elif key == "l1_current":
-                    l1_current = value
-                elif key == "l2_current":
-                    l2_current = value
-                elif key == "l3_current":
-                    l3_current = value
-                
-                elif key == "total_power":
-                    total_power = value
-                elif key == "l1_power":
-                    l1_power = value
-                elif key == "l2_power":
-                    l2_power = value
-                elif key == "l3_power":
-                    l3_power = value
-                    
-                elif key == "total_kvarh":
-                    total_kvarh = value
-                elif key == "l1_kvarh":
-                    l1_kvarh = value
-                elif key == "l2_kvarh":
-                    l2_kvarh = value
-                elif key == "l3_kvarh":
-                    l3_kvarh = value
-                    
-                elif key == "l1_power_factor":
-                    l1_power_factor = value
-                elif key == "l2_power_factor":
-                    l2_power_factor = value
-                elif key == "l3_power_factor":
-                    l3_power_factor = value
-                
-                elif key == "phase_frequency":
-                    phase_frequency = value
-                elif key == "energy_consumption":
-                    energy_consumption = value
-                if debug:
-                    print(f"{key}: {value}{unit}")
+                sensor_data[key] = {"value":value,
+                                "unit":unit,
+                                "type":f"{type(value)}"}
             except OverflowError:
                 print(f"{value}{unit} Nilai dari {key} terlalu besar untuk dikonversi menjadi float.")
-        return l1_voltage, l2_voltage, l3_voltage,total_current, l1_current, l2_current, l3_current, total_power, l1_power, l2_power, l3_power, total_kvarh, l1_kvarh, l2_kvarh, l3_kvarh, l1_power_factor, l2_power_factor, l3_power_factor, phase_frequency, energy_consumption
+        if debug:
+            print("##################################################")
+            print(f"{__file__}")
+            sensor_data = json.dumps(sensor_data, indent=4)
+            print(sensor_data)
+            print("##################################################")
+        return sensor_data
     except Exception as e:
         print(f"Failed to read from instrument ------ {e}")
+        return sensor_data
 
