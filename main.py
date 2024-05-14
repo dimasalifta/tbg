@@ -15,6 +15,8 @@ import socket
 MQTT_BROKER = os.getenv("MQTT_BROKER")
 MQTT_TOPIC = os.getenv("MQTT_TOPIC")
 MQTT_PORT=os.getenv("MQTT_PORT")
+MQTT_USERNAME = os.getenv("MQTT_USERNAME")
+MQTT_PASSWORD=os.getenv("MQTPASSWORDRT")
 
 SNMP_HOST=os.getenv("SNMP_HOST")
 SNMP_COMMUNITY=os.getenv("SNMP_COMMUNITY")
@@ -399,7 +401,7 @@ def on_publish_alarm(payload):
 def on_publish_siteid(payload):
     # Buat instance client MQTT
     client = mqtt.Client()
-
+    client.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
     # Hubungkan ke broker MQTT
     client.connect("mbiot.tower-bersama.com", 1884, 60)
 
@@ -412,7 +414,7 @@ def on_publish_siteid(payload):
 def on_publish_status(payload):
     # Buat instance client MQTT
     client = mqtt.Client()
-
+    client.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
     # Hubungkan ke broker MQTT
     client.connect("mbiot.tower-bersama.com", 1884, 60)
 
@@ -425,7 +427,7 @@ def on_publish_status(payload):
 def on_publish_parameters(payload):
     # Buat instance client MQTT
     client = mqtt.Client()
-
+    client.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
     # Hubungkan ke broker MQTT
     client.connect("mbiot.tower-bersama.com", 1884, 60)
 
@@ -438,7 +440,7 @@ def on_publish_parameters(payload):
 def on_publish_alarms(payload):
     # Buat instance client MQTT
     client = mqtt.Client()
-
+    client.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
     # Hubungkan ke broker MQTT
     client.connect("mbiot.tower-bersama.com", 1884, 60)
 
@@ -451,7 +453,7 @@ def on_publish_alarms(payload):
 def on_publish_consumption(payload):
     # Buat instance client MQTT
     client = mqtt.Client()
-
+    client.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
     # Hubungkan ke broker MQTT
     client.connect("mbiot.tower-bersama.com", 1884, 60)
 
