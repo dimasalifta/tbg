@@ -100,11 +100,11 @@ def read_sensor_data(debug=False):
                 print(oid.prettyPrint(), val.prettyPrint())
                 
                 if val_type == "string":
-                    val = np.string_(val)
+                    val = str(val)
                 elif val_type == "integer":
-                    val = np.int(val)
+                    val = int(val)
                 elif val_type == "integer32":
-                    val = np.int32(val)
+                    val = int(val)
                 elif val_type == " ":
                     val = val
             
