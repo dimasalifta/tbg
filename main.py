@@ -9,6 +9,7 @@ import json
 import time
 import struct
 import minimalmodbus
+import datetime
 MQTT_BROKER = os.getenv("MQTT_BROKER")
 MQTT_TOPIC = os.getenv("MQTT_TOPIC")
 MQTT_PORT=os.getenv("MQTT_PORT")
@@ -37,7 +38,7 @@ parameter_dict = {
 #   "phase_frequency": ["psInputFrequency","1.3.6.1.4.1.40211.4.1.1.4.0"],
   "dc_output_voltage":["systemVoltage","1.3.6.1.4.1.40211.2.1.1.2.0"],
   "total_rate_capacity":["battAH","1.3.6.1.4.1.40211.2.1.1.11.0"],
-#   "battery_capacity_ah_2":["battAH","1.3.6.1.4.1.40211.2.1.1.11.1"],
+   #"total_rate_capacity_2":["battAH","1.3.6.1.4.1.40211.2.1.1.11.1"],
   
   "load_current_1":["loadCurr1","1.3.6.1.4.1.40211.3.1.1.6.0"],
   "load_current_2":["loadCurr2","1.3.6.1.4.1.40211.3.1.1.7.0"],
@@ -98,7 +99,14 @@ parameter_dict = {
   "total_battery_current":["psBatteryCurrent","1.3.6.1.4.1.40211.3.1.1.1.0"],
 }
 
-
+alarm_parameter_dict = {
+    "alarm_trap_no":["x","1.3.6.1.4.1.40211.10.1.1.1.x"],
+    "alarm_time":["x","1.3.6.1.4.1.40211.10.1.1.2.x"],
+    "alarm_status_change":["x","1.3.6.1.4.1.40211.10.1.1.3.x"],
+    "alarm_severity":["x","1.3.6.1.4.1.40211.10.1.1.4.x"],
+    "alarm_description":["x","1.3.6.1.4.1.40211.10.1.1.5.x"],
+    "alarm_type":["x","1.3.6.1.4.1.40211.10.1.1.6.x"],
+}
 
 list_volt = [
              "dc_output_voltage",
@@ -114,7 +122,8 @@ list_volt = [
              "load_power_2",
              "load_power_3",
              "load_power_4",
-             "dc_energy_consumption"
+             "dc_energy_consumption",
+             "total_rate_capacity",
              ]
 
 list_volt_2 = [
@@ -126,7 +135,10 @@ list_volt_2 = [
              "rectifier3_output_voltage",
              "rectifier1_temperature",
              "rectifier2_temperature",
-             "rectifier3_temperature"
+             "rectifier3_temperature",
+             "battery1_capacity",
+             "battery2_capacity"
+
              ]
 # slave address (in decimal)
 DEVICE_ADDRESS_SHT20 = 1
@@ -192,9 +204,12 @@ list_register_energy_meter = {
     "l3_power_factor" : [46," theta"],
     
     "3phase_frequency" : [54," Hz"],
-    "ac_energy_consumption" : [80," kWh"]
+    "ac_energy_consumption" : [256," kWh"]
     
 }
+
+dummy_active_alarm = [{
+}]
 def convert_decimal(x):
     angka = int(x)
     hasil_pembagian = angka / 1000
@@ -248,6 +263,85 @@ def read_rs485():
     except Exception as e:
         print(f"Failed to read from instrument ------ {e}")
     return energy_meter_data
+
+def check_active_alarm():
+    oid_template = "1.3.6.1.4.1.40211.10.1.1.%d.%d"   
+
+    # Define a PySNMP CommunityData object named auth, by providing the SNMP community string
+    auth = cmdgen.CommunityData(SNMP_COMMUNITY)
+
+    # Define the CommandGenerator, which will be used to send SNMP queries
+    cmdGen = cmdgen.CommandGenerator()
+
+    # List to store results
+    results = []
+
+    # Iterate over x and y values
+    for x in range(1, 7):
+        # Dictionary to store values for each iteration of y
+        data = {}
+        for y in range(1, 7):  # Assuming y ranges from 1 to 6
+            # Construct the OID by substituting %d with the iteration numbers
+            oid = oid_template % (y, x)
+            
+            # Query the network device for the current OID
+            errorIndication, errorStatus, errorIndex, varBinds = cmdGen.getCmd(
+                auth,
+                cmdgen.UdpTransportTarget((SNMP_HOST, SNMP_PORT)),
+                oid,
+                lookupMib=True,
+            )
+            
+            # Check if there was an error querying the device
+            if errorIndication:
+                sys.exit()
+            
+            # We only expect a single response from the host for each OID
+            for oid, val in varBinds:
+                # Assign values to keys based on the prefix
+                if y == 1:
+                    data["no"] = val.prettyPrint()
+                elif y == 2:
+                    #print(val.prettyPrint())
+                    # Konversi nilai heksadesimal ke integer
+                    hex_value = val.prettyPrint()
+                    if hex_value.startswith("0x"):
+                        hex_value = hex_value[2:]  # Hilangkan awalan '0x' jika ada
+                    try:
+                        timestamp = int(hex_value, 16)
+
+                        # Konversi timestamp ke format datetime
+                        dt_object = datetime.datetime.utcfromtimestamp(timestamp / 10**9)  # Ubah nanosekon menjadi mikrodetik
+
+                        # Format waktu sesuai kebutuhan
+                        formatted_time = dt_object.strftime('%Y-%m-%d %H:%M:%S')
+                        data["time"] = formatted_time
+                        #print("Formatted Time:", formatted_time)
+                    except ValueError as e:
+                        print("Error converting timestamp:", e)
+                    
+                elif y == 3:
+                    data["status_change"] = val.prettyPrint()
+                elif y == 4:
+                    data["severity"] = val.prettyPrint()
+                elif y == 5:
+                    data["desc"] = val.prettyPrint()
+                elif y == 6:
+                    data["type"] = val.prettyPrint()
+        
+        # Check if the data already exists in the results list, except for "no" key
+        exists = any(item for item in results if all(data[k] == item[k] for k in data if k != "no"))
+        
+        # If data does not exist (excluding "no" key), append it to results list
+        if not exists:
+            results.append(data)
+
+    # Convert the results list to JSON
+    json_output = json.dumps(results, indent=4)
+    print(json_output)
+    return json_output
+
+
 # Fungsi untuk menginisiFalisasi koneksi MQTT
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
@@ -276,6 +370,19 @@ def on_publish(payload):
 
     # Kirim pesan ke topik MQTT
     client.publish(MQTT_TOPIC, payload)
+
+    # Tutup koneksi
+    client.disconnect()
+    
+def on_publish_alarm(payload):
+    # Buat instance client MQTT
+    client = mqtt.Client()
+
+    # Hubungkan ke broker MQTT
+    client.connect(MQTT_BROKER, 1883, 60)
+
+    # Kirim pesan ke topik MQTT
+    client.publish("tbg_iot_alarm", payload)
 
     # Tutup koneksi
     client.disconnect()
@@ -325,7 +432,7 @@ def snmp_process():
                         data[param_name] = val
                     else:
                         data[param_name] = val.prettyPrint()
-                        
+            pretty_active_alarm = check_active_alarm()
             rs485_data = read_rs485()
             # print(data)           
             site_id = data["site_id"]
@@ -390,15 +497,16 @@ def snmp_process():
             
             total_rate_capacity = float(data["total_rate_capacity"]) # unit Ah
             
-            battery1_capacity = int(data["battery1_capacity"]) # %
-            battery2_capacity = int(data["battery2_capacity"]) # %
+            battery1_capacity = float(data["battery1_capacity"]) # %
+            #print(battery1_capacity)
+            battery2_capacity = float(data["battery2_capacity"]) # %
             total_remaining_capacity_percent = (battery1_capacity+battery2_capacity)/2
-
+            #print(battery2_capacity)
             total_remaining_capacity = total_rate_capacity * (total_remaining_capacity_percent / 100)
-            # if total_dc_load_current != 0 :
-            #     backup_time = total_remaining_capacity / float(total_dc_load_current)
-            # else:
-            backup_time = 0
+            if float(total_dc_load_current) > 0 :
+                backup_time = total_remaining_capacity / float(total_dc_load_current)
+            else:
+                backup_time = "-"
             
             system_alarm_status = data["system_alarm_status"]
             battery_charging_status = data["battery_charging_status"]
@@ -454,7 +562,11 @@ def snmp_process():
             payload = json.dumps(data)
             
             # Mengirim payload JSON ke broker MQTT
-            on_publish(pretty_parameter_tbg)                                                                                                                                                  
+            on_publish(pretty_parameter_tbg)  
+            if data['system_alarm_status'] == "4" or "5":
+                on_publish_alarm(pretty_active_alarm)
+            else:
+                on_publish_alarm(dummy_active_alarm)
             time.sleep(2)
         except Exception as e:
             print("Exception:", e)
