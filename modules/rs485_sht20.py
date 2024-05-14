@@ -25,8 +25,8 @@ REGISTER_NUMBER_DECIMALS_SHT20 = 1
 ModBus_Command = 4
 
 list_register_sht20 = {
-    "temperature" : [1," Celcius"],
-    "humidity" : [2," %"] 
+    "temperature" : [1,"Celcius"],
+    "humidity" : [2,"%"] 
 }
 
 # Initialize variables to None
