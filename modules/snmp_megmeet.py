@@ -96,6 +96,9 @@ def read_sensor_data(debug=False):
                 print(f"Error Query: {e}")
 
             for oid, val in varBinds:
+                print(type(val.prettyPrint()))
+                print(oid.prettyPrint(), val.prettyPrint())
+                
                 if val_type == "string":
                     val = np.string_(val)
                 elif val_type == "integer":
@@ -104,8 +107,7 @@ def read_sensor_data(debug=False):
                     val = np.int32(val)
                 elif val_type == " ":
                     val = val
-                print(type(val.prettyPrint()))
-                print(oid.prettyPrint(), val.prettyPrint())
+            
                 sensor_data[param_name] = {"value":val,
                                             "unit":unit,
                                             "type":f"{type(val)}"}
