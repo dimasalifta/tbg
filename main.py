@@ -10,6 +10,8 @@ import time
 import struct
 import minimalmodbus
 import datetime
+import socket
+
 MQTT_BROKER = os.getenv("MQTT_BROKER")
 MQTT_TOPIC = os.getenv("MQTT_TOPIC")
 MQTT_PORT=os.getenv("MQTT_PORT")
@@ -18,6 +20,9 @@ SNMP_HOST=os.getenv("SNMP_HOST")
 SNMP_COMMUNITY=os.getenv("SNMP_COMMUNITY")
 SNMP_PORT=os.getenv("SNMP_PORT")
 
+IMEI=os.getenv("IMEI")
+
+tbg_topic = f"TBGPower/{IMEI}"
 parameter_dict = {
   "site_id": ["identName","1.3.6.1.4.1.40211.1.1.1.4.0"],
   "system_type": ["identModel","1.3.6.1.4.1.40211.1.1.1.2.0"],
@@ -341,7 +346,11 @@ def check_active_alarm():
     print(json_output)
     return json_output
 
-
+def get_ip():
+    
+    hostname = socket.gethostname()
+    local_ip = socket.gethostbyname(hostname)
+    return local_ip
 # Fungsi untuk menginisiFalisasi koneksi MQTT
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
@@ -383,6 +392,71 @@ def on_publish_alarm(payload):
 
     # Kirim pesan ke topik MQTT
     client.publish("tbg_iot_alarm", payload)
+
+    # Tutup koneksi
+    client.disconnect()
+    
+def on_publish_siteid(payload):
+    # Buat instance client MQTT
+    client = mqtt.Client()
+
+    # Hubungkan ke broker MQTT
+    client.connect("mbiot.tower-bersama.com", 1884, 60)
+
+    # Kirim pesan ke topik MQTT
+    client.publish(f"{tbg_topic}/siteid", payload)
+
+    # Tutup koneksi
+    client.disconnect()
+
+def on_publish_status(payload):
+    # Buat instance client MQTT
+    client = mqtt.Client()
+
+    # Hubungkan ke broker MQTT
+    client.connect("mbiot.tower-bersama.com", 1884, 60)
+
+    # Kirim pesan ke topik MQTT
+    client.publish(f"{tbg_topic}/status", payload)
+
+    # Tutup koneksi
+    client.disconnect()
+    
+def on_publish_parameters(payload):
+    # Buat instance client MQTT
+    client = mqtt.Client()
+
+    # Hubungkan ke broker MQTT
+    client.connect("mbiot.tower-bersama.com", 1884, 60)
+
+    # Kirim pesan ke topik MQTT
+    client.publish(f"{tbg_topic}/parameters", payload)
+
+    # Tutup koneksi
+    client.disconnect()
+    
+def on_publish_alarms(payload):
+    # Buat instance client MQTT
+    client = mqtt.Client()
+
+    # Hubungkan ke broker MQTT
+    client.connect("mbiot.tower-bersama.com", 1884, 60)
+
+    # Kirim pesan ke topik MQTT
+    client.publish(f"{tbg_topic}/alarms", payload)
+
+    # Tutup koneksi
+    client.disconnect()
+    
+def on_publish_consumption(payload):
+    # Buat instance client MQTT
+    client = mqtt.Client()
+
+    # Hubungkan ke broker MQTT
+    client.connect("mbiot.tower-bersama.com", 1884, 60)
+
+    # Kirim pesan ke topik MQTT
+    client.publish(f"{tbg_topic}/consumption", payload)
 
     # Tutup koneksi
     client.disconnect()
@@ -510,6 +584,7 @@ def snmp_process():
             
             system_alarm_status = data["system_alarm_status"]
             battery_charging_status = data["battery_charging_status"]
+            
             parameter_tbg = {
                 "site_id":site_id,
                 "system_type":system_type,
@@ -554,7 +629,6 @@ def snmp_process():
                 "battery_charging_status" : battery_charging_status,
                 
             }
-            
             pretty_parameter_tbg = json.dumps(parameter_tbg, indent=4)
             print(pretty_parameter_tbg)
             # print(parameter_tbg)
@@ -562,11 +636,89 @@ def snmp_process():
             payload = json.dumps(data)
             
             # Mengirim payload JSON ke broker MQTT
-            on_publish(pretty_parameter_tbg)  
+            on_publish(pretty_parameter_tbg) 
+            
+            ###############################################################################################3
+            on_publish_siteid("Developer Bintaro")
+            
+            my_ip = get_ip()
+            status_payload = {"online": 1,
+                              "ip":f"{my_ip}"}
+            on_publish_status(status_payload)
+            
+            
+            # example_parameters = {"AC Voltage":{"L1":220,
+            #                          "L2":220,
+            #                          "L3":220},
+            #            "AC Current":{"L1":2,
+            #                          "L2":2,
+            #                          "L3":2.3},
+            #            "DC Voltage":40,
+            #            "DC Current":20}
+            paramaters_payload = {
+                "AC Voltage":{"L1":l1_voltage,
+                              "L2":l2_voltage,
+                              "L3":l3_voltage},
+                "AC Current":{"L1":l1_current,
+                              "L2":l2_current,
+                              "L3":l3_current},
+                
+                "DC Output Voltage":dc_output_voltage,  
+                
+                "Rectifier Total Current":rectifier_current,
+                
+                "Battery Capacity":total_remaining_capacity_percent,
+                
+                "Battery Current    ":total_battery_current,
+                
+                "Backup Time" : backup_time,
+                "Battery Temperature":{"Battery 1":battery1_temperature,
+                                       "Battery 2":battery2_temperature},
+                "Recitifier Temperature":{"Rectifier 1": rectifier1_temperature,
+                                          "Rectifier 2": rectifier2_temperature,
+                                          "Rectifier 3": rectifier3_temperature},
+                "Rectifier Installed":rectifier_quantity,
+                "Recitifier Serial Number":{"Rectifier 1": rectifier1_serial_number,
+                                          "Rectifier 2": rectifier2_serial_number,
+                                          "Rectifier 3": rectifier3_serial_number},
+                "Recitifier Load Usage":{"Rectifier 1": rectifier1_load_usage,
+                                          "Rectifier 2": rectifier2_load_usage,
+                                          "Rectifier 3": rectifier3_load_usage},
+                "Recitifier Status":{"Rectifier 1": rectifier1_status,
+                                          "Rectifier 2": rectifier2_status,
+                                          "Rectifier 3": rectifier3_status},
+                "Temperature" : "nan",
+                "Humidity" : "nan",
+                
+                "total_remaining_capacity":total_remaining_capacity,
+                "total_dc_load_current":total_dc_load_current,
+                "total_dc_load_power":total_dc_load_power,
+                "rectifier_rate_voltage":rectifier_rate_voltage,
+                "battery1_current":battery1_current,
+                "battery2_current":battery2_current,
+                "total_rate_capacity":total_rate_capacity,
+                "system_alarm_status" : system_alarm_status,
+                "battery_charging_status" : battery_charging_status,
+                "total_ac_input_power":total_ac_input_power,
+
+                
+            }
+            
+            
+            on_publish_parameters(paramaters_payload)
+            
             if data['system_alarm_status'] == "4" or "5":
                 on_publish_alarm(pretty_active_alarm)
+                on_publish_alarms(pretty_active_alarm)
             else:
                 on_publish_alarm(dummy_active_alarm)
+                on_publish_alarms(dummy_active_alarm)
+            
+            consumption_payload = {"AC":ac_energy_consumption,
+                                  "DC":dc_energy_consumption}
+            on_publish_consumption(consumption_payload)
+            
+            
             time.sleep(2)
         except Exception as e:
             print("Exception:", e)
