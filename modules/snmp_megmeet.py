@@ -93,10 +93,10 @@ list_parameter_megmeet = {
 #                        "1.3.6.1.4.1.40211.3.1.1.5.0",
 #                        "%",
 #                        "integer32"],
-#   "battery_energy":["battEnergy",
-#                     "1.3.6.1.4.1.40211.3.1.1.21.0",
-#                     "Wh",
-#                     "integer32"],
+  "battery_energy":["battEnergy",
+                    "1.3.6.1.4.1.40211.3.1.1.21.0",
+                    "Wh",
+                    "integer32"],
 # #   "battery_slots":["battNum","1.3.6.1.4.1.40211.3.1.1.10.0"],
   
 
