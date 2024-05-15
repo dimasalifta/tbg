@@ -141,7 +141,14 @@ def read_sensors():
         # "total_ac_input_power":total_ac_input_power,
         }
     parameters = json.dumps(parameters, indent=4)
-    return siteid,status,parameters
+    
+    alarms = {"Door Open": 1}
+    alarms = json.dumps(alarms, indent=4)
+    
+    consumptions = {"AC": ac_energy_consumption,
+                    "DC":battery_energy}
+    consumptions = json.dumps(consumptions, indent=4)
+    return siteid,status,parameters,alarms,consumptions
 
 
 def on_connect_bintaro(client, userdata, flags, rc):
@@ -228,12 +235,12 @@ def mqtt_process_tbg():
 
 def publish_data():
     while True:
-        siteid,status,parameters = read_sensors()
+        siteid,status,parameters,alarms,consumptions = read_sensors()
         on_publish_bintaro(siteid,'TBGPower/T00Q56/siteid')
         on_publish_bintaro(status,'TBGPower/T00Q56/status')
         on_publish_bintaro(parameters,'TBGPower/T00Q56/parameters')
-        # on_publish_bintaro(status,'TBGPower/T00Q56/alarms')
-        # on_publish_bintaro(siteid,'TBGPower/T00Q56/consumption')
+        on_publish_bintaro(alarms,'TBGPower/T00Q56/alarms')
+        on_publish_bintaro(consumptions,'TBGPower/T00Q56/consumptions')
         # on_publish_tbg()
         # time.sleep(5)
     # pass

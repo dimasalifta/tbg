@@ -203,7 +203,7 @@ def read_sensor_data(debug=False):
 
             for oid, val in varBinds:
                 # print(type(val.prettyPrint()))
-                print(oid.prettyPrint(), val.prettyPrint())
+                # print(oid.prettyPrint(), val.prettyPrint())
                 
                 if val_type == "string":
                     val = str(val)
