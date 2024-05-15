@@ -33,15 +33,15 @@ def read_sensors():
     data_megmeet = snmp_megmeet.read_sensor_data(debug=False)
     print(data_megmeet)
     print(type(data_megmeet))
-    system_voltage = data_megmeet['system_voltage']['value']
-    system_current = data_megmeet['system_current']['value']
-    battery_energy = data_megmeet['battery_energy']['value']
+    # system_voltage = data_megmeet['system_voltage']['value']
+    # system_current = data_megmeet['system_current']['value']
+    # battery_energy = data_megmeet['battery_energy']['value']
     
 
-    rectifier1_output_current = data_megmeet['rectifier1_output_current']['value']
-    rectifier2_output_current = data_megmeet['rectifier2_output_current']['value']
-    rectifier3_output_current = data_megmeet['rectifier3_output_current']['value']
-    rectifier_total_current = rectifier1_output_current + rectifier2_output_current + rectifier3_output_current
+    # rectifier1_output_current = data_megmeet['rectifier1_output_current']['value']
+    # rectifier2_output_current = data_megmeet['rectifier2_output_current']['value']
+    # rectifier3_output_current = data_megmeet['rectifier3_output_current']['value']
+    # rectifier_total_current = rectifier1_output_current + rectifier2_output_current + rectifier3_output_current
     # rctifier1_voltage = data_megmeet['rctifier1_votlage']['value']
     # l3_voltage = data_megmeet['l3_voltage']['value']
     # l1_current = data_megmeet['l1_current']['value']
@@ -69,13 +69,13 @@ def read_sensors():
                         "L2":l2_current,
                         "L3":l3_current},
         
-        "DC Voltage": system_voltage,
-        "DC Current": system_current,
-        "DC Output Voltage":system_voltage,
-        "DC Output Current":system_current, 
-        "DC Total Power":battery_energy,
+        # "DC Voltage": system_voltage,
+        # "DC Current": system_current,
+        # "DC Output Voltage":system_voltage,
+        # "DC Output Current":system_current, 
+        # "DC Total Power":battery_energy,
 
-        "Rectifier Total Current":rectifier_total_current,
+        # "Rectifier Total Current":rectifier_total_current,
         
         # "Battery Capacity":total_remaining_capacity_percent,
         
