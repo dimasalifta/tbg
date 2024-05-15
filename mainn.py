@@ -166,7 +166,7 @@ def on_publish_tbg(payload,topic):
         client.publish(topic, payload, qos=2, retain=True)
         
     elif topic == 'TBGPower/T00Q56/parameters':
-        client.publish(topic, payload, qos=1, retain=False)
+        client.publish(topic, payload, qos=0, retain=False)
         
     elif topic == 'TBGPower/T00Q56/alarms':
         client.publish(topic, payload, qos=2, retain=False)
