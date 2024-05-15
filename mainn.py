@@ -43,7 +43,6 @@ def read_sensors():
     battery1_current = data_megmeet['battery1_current']['value']
     battery2_current = data_megmeet['battery2_current']['value']
     total_battery_current = data_megmeet['total_battery_current']['value']
-    total_battery_current = total_battery_current * 0.001
     battery1_temperature = data_megmeet['battery1_temperature']['value']
     battery2_temperature = data_megmeet['battery1_temperature']['value']
     battery1_capacity = data_megmeet['battery1_capacity']['value']
@@ -55,6 +54,7 @@ def read_sensors():
     load4_current = data_megmeet['load2_current']['value']
     total_dc_load_current = load1_current + load2_current + load3_current + load4_current + total_battery_current
     total_dc_load_current = abs(total_dc_load_current*0.001)
+    total_battery_current = total_battery_current * 0.001
     total_remaining_capacity_percent = (battery1_capacity+battery2_capacity)/2
     total_rate_capacity = data_megmeet['battery_nominal_capacity']['value']
     total_remaining_capacity = total_rate_capacity * (total_remaining_capacity_percent / 100)
