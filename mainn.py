@@ -33,7 +33,7 @@ def read_sensors():
     data_megmeet = snmp_megmeet.read_sensor_data(debug=False)
     # print(data_megmeet)
     # print(type(data_megmeet))
-    # system_voltage = data_megmeet['system_voltage']['value']
+    system_voltage = data_megmeet['system_voltage']['value']
     # system_current = data_megmeet['system_current']['value']
     # battery_energy = data_megmeet['battery_energy']['value']
     
@@ -69,7 +69,7 @@ def read_sensors():
                         "L2":l2_current,
                         "L3":l3_current},
         
-        # "DC Voltage": system_voltage,
+        "DC Voltage": system_voltage
         # "DC Current": system_current,
         # "DC Output Voltage":system_voltage,
         # "DC Output Current":system_current, 
