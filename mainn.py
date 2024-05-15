@@ -33,7 +33,7 @@ def read_sensors():
     
     status = {"online": 1,
               "ip":ip_value}
-    # status = json.dumps(status, indent=4)
+    status = json.dumps(status)
     print(status)
     print(type(status))
     return siteid,status
