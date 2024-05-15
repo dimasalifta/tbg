@@ -134,7 +134,7 @@ list_parameter_megmeet = {
                                "string"],
   "rectifier1_status":["onoffStatus","1.3.6.1.4.1.40211.8.1.1.7.1",
                                " ",
-                               "integer32"],
+                               "boolean"],
   
   
 #    "rectifier_2_address":["rectNum","1.3.6.1.4.1.40211.8.1.1.1.2"],
@@ -155,7 +155,7 @@ list_parameter_megmeet = {
                                "string"],
   "rectifier2_status":["onoffStatus","1.3.6.1.4.1.40211.8.1.1.7.2",
                                " ",
-                               "integer32"],
+                               "boolean"],
   
 #    "rectifier_3_address":["rectNum","1.3.6.1.4.1.40211.8.1.1.1.3"],
 #   "rectifier_3_input_voltage":["rectNum","1.3.6.1.4.1.40211.8.1.1.2.3"],
@@ -175,7 +175,7 @@ list_parameter_megmeet = {
                                "string"],
   "rectifier3_status":["onoffStatus","1.3.6.1.4.1.40211.8.1.1.7.3",
                                " ",
-                               "integer32"],
+                               "boolean"],
   
 }
 
