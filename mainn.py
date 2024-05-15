@@ -109,29 +109,29 @@ def read_sensors():
                         "L2":l2_current,
                         "L3":l3_current},
         
-        "DC Voltage": system_voltage*0.001,
-        "DC Current": system_current*0.001,
-        "DC Output Voltage":system_voltage*0.001,
-        "DC Output Current":system_current*0.001, 
-        "DC Total Power":battery_energy*0.001,
+        "DC Voltage": round(system_voltage*0.001, 2),
+        "DC Current": round(system_current*0.001, 2),
+        "DC Output Voltage":round(system_voltage*0.001, 2),
+        "DC Output Current":round(system_current*0.001, 2),
+        "DC Total Power":round(battery_energy*0.001, 2),
 
         "Rectifier Total Current":rectifier_total_current*0.1,
         
         "AC Consumption":ac_energy_consumption,
-        "DC Consumption":battery_energy*0.001,
+        "DC Consumption":round(battery_energy*0.001, 2),
         
         
         "Battery Capacity":total_remaining_capacity_percent*0.1,
         "Battery Capacity Ah":total_remaining_capacity,
         "Total Rate Capacity Ah":total_rate_capacity,
         
-        "Battery Current":total_battery_current,
+        "Battery Current":round(total_battery_current, 2),
         
-        "Battery Voltage":system_voltage*0.001,
+        "Battery Voltage":round(system_voltage*0.001, 2),
         
-        "Backup Time" : backup_time,
-        "Battery Temperature":{"Battery 1":battery1_temperature*0.001,
-                                "Battery 2":battery2_temperature*0.001},
+        "Backup Time" : round(backup_time, 2),
+        "Battery Temperature":{"Battery 1":round(battery1_temperature*0.001, 2),
+                                "Battery 2":round(battery2_temperature*0.001, 2)},
         
         "Recitifier Temperature":{"Rectifier 1": rectifier1_temperature*0.1,
                                     "Rectifier 2": rectifier2_temperature*0.1,
