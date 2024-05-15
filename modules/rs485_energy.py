@@ -50,7 +50,7 @@ list_register_energy_meter = {
     "l3_power_factor" : [46,"theta"],
     
     "phase_frequency" : [54,"Hz"],
-    "energy_consumption" : [256,"kWh"]
+    "ac_energy_consumption" : [256,"kWh"]
 }
 # Initialize variables to None
 for key in list_register_energy_meter.keys():

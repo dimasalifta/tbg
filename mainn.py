@@ -16,11 +16,33 @@ def read_sensors():
     temperature_value = data_sht20['temperature']['value']
     # print(temperature_value)
     # print(type(temperature_value))
-    
     time.sleep(1)
+        
     data_energy = rs485_energy.read_sensor_data(debug=False)
+    l1_voltage = data_energy['l1_voltage']['value']
+    l2_voltage = data_energy['l2_votlage']['value']
+    l3_voltage = data_energy['l3_voltage']['value']
+    l1_current = data_energy['l1_current']['value']
+    l2_current = data_energy['l2_current']['value']
+    l3_current = data_energy['l3_current']['value']
+    ac_energy_consumption = data_energy['ac_nergy_consumption']['value']
     time.sleep(1)
-    data_megmeet = snmp_megmeet.read_sensor_data(debug=False)
+    
+    data_megmeet = snmp_megmeet.read_sensor_data(debug=True)
+    system_voltage = data_megmeet['system_voltage']['value']
+    system_current = data_megmeet['system_current']['value']
+    battery_energy = data_megmeet['battery_energy']['value']
+    
+
+    rectifier1_output_current = data_megmeet['rectifier1_output_current']['value']
+    rectifier2_output_current = data_megmeet['rectifier2_output_current']['value']
+    rectifier3_output_current = data_megmeet['rectifier3_output_current']['value']
+    rectifier_total_current = rectifier1_output_current + rectifier2_output_current + rectifier3_output_current
+    # rctifier1_voltage = data_megmeet['rctifier1_votlage']['value']
+    # l3_voltage = data_megmeet['l3_voltage']['value']
+    # l1_current = data_megmeet['l1_current']['value']
+    # l3_current = data_megmeet['l3_current']['value']
+    # ac_energy_consumption = data_energy['ac_nergy_consumption']['value']
     time.sleep(1)
     data_megmeet_alarm = snmp_megmeet_alarm.read_sensor_data(debug=False)
     time.sleep(1)
@@ -35,8 +57,58 @@ def read_sensors():
               "ip":ip_value}
     status = json.dumps(status, indent=4)
     
+    parameters = {
+        "AC Voltage":{"L1":l1_voltage,
+                        "L2":l2_voltage,
+                        "L3":l3_voltage},
+        "AC Current":{"L1":l1_current,
+                        "L2":l2_current,
+                        "L3":l3_current},
+        
+        "DC Voltage": system_voltage,
+        "DC Current": system_current,
+        "DC Output Voltage":system_voltage,
+        "DC Output Current":system_current, 
+        "DC Total Power":battery_energy,
+
+        "Rectifier Total Current":rectifier_total_current,
+        
+        # "Battery Capacity":total_remaining_capacity_percent,
+        
+        # "Battery Current    ":total_battery_current,
+        
+        # "Backup Time" : backup_time,
+        # "Battery Temperature":{"Battery 1":battery1_temperature,
+        #                         "Battery 2":battery2_temperature},
+        # "Recitifier Temperature":{"Rectifier 1": rectifier1_temperature,
+        #                             "Rectifier 2": rectifier2_temperature,
+        #                             "Rectifier 3": rectifier3_temperature},
+        # "Rectifier Installed":rectifier_quantity,
+        # "Recitifier Serial Number":{"Rectifier 1": rectifier1_serial_number,
+        #                             "Rectifier 2": rectifier2_serial_number,
+        #                             "Rectifier 3": rectifier3_serial_number},
+        # "Recitifier Load Usage":{"Rectifier 1": rectifier1_load_usage,
+        #                             "Rectifier 2": rectifier2_load_usage,
+        #                             "Rectifier 3": rectifier3_load_usage},
+        # "Recitifier Status":{"Rectifier 1": rectifier1_status,
+        #                             "Rectifier 2": rectifier2_status,
+        #                             "Rectifier 3": rectifier3_status},
+        # "Temperature" : "nan",
+        # "Humidity" : "nan",
+        
+        # "total_remaining_capacity":total_remaining_capacity,
+        # "total_dc_load_current":total_dc_load_current,
+        # "total_dc_load_power":total_dc_load_power,
+        # "rectifier_rate_voltage":rectifier_rate_voltage,
+        # "battery1_current":battery1_current,
+        # "battery2_current":battery2_current,
+        # "total_rate_capacity":total_rate_capacity,
+        # "system_alarm_status" : system_alarm_status,
+        # "battery_charging_status" : battery_charging_status,
+        # "total_ac_input_power":total_ac_input_power,
+        }
     
-    return siteid,status
+    return siteid,status,parameters
 
 
 def on_connect_bintaro(client, userdata, flags, rc):
@@ -61,14 +133,20 @@ def on_publish_bintaro(payload,topic):
     client.connect(broker1, 1883, 60)
 
     if topic == 'TBGPower/T00Q56/status':
-        print('mnasukj1')
         client.will_set(topic, payload, qos=2, retain=True)
         client.publish(topic, payload, qos=2, retain=True)
+        
+    elif topic == 'TBGPower/T00Q56/parameters':
+        client.publish(topic, payload, qos=1, retain=False)
+        
+    elif topic == 'TBGPower/T00Q56/alarms':
+        client.publish(topic, payload, qos=2, retain=False)
+        
+    elif topic == 'TBGPower/T00Q56/consumption':
+        client.publish(topic, payload, qos=2, retain=False)
     else:
         # Kirim pesan ke topik MQTT
-        print('mnasukj2')
         client.publish(topic, payload)
-        print('3')
     # Tutup koneksi
     client.disconnect()
     
@@ -82,6 +160,15 @@ def on_publish_tbg(payload,topic):
     if topic == 'TBGPower/T00Q56/status':
         client.will_set(topic, payload, qos=2, retain=True)
         client.publish(topic, payload, qos=2, retain=True)
+        
+    elif topic == 'TBGPower/T00Q56/parameters':
+        client.publish(topic, payload, qos=1, retain=False)
+        
+    elif topic == 'TBGPower/T00Q56/alarms':
+        client.publish(topic, payload, qos=2, retain=False)
+        
+    elif topic == 'TBGPower/T00Q56/consumption':
+        client.publish(topic, payload, qos=2, retain=False)
     else:
         # Kirim pesan ke topik MQTT
         client.publish(topic, payload)
@@ -108,6 +195,9 @@ def publish_data():
         siteid,status = read_sensors()
         on_publish_bintaro(siteid,'TBGPower/T00Q56/siteid')
         on_publish_bintaro(status,'TBGPower/T00Q56/status')
+        on_publish_bintaro(siteid,'TBGPower/T00Q56/parameters')
+        # on_publish_bintaro(status,'TBGPower/T00Q56/alarms')
+        # on_publish_bintaro(siteid,'TBGPower/T00Q56/consumption')
         # on_publish_tbg()
         # time.sleep(5)
     # pass
