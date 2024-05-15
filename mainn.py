@@ -14,8 +14,8 @@ topic2 = 'test'
 def read_sensors():
     data_sht20 = rs485_sht20.read_sensor_data(debug=False)
     temperature_value = data_sht20['temperature']['value']
-    print(temperature_value)
-    print(type(temperature_value))
+    # print(temperature_value)
+    # print(type(temperature_value))
     
     time.sleep(1)
     data_energy = rs485_energy.read_sensor_data(debug=False)
@@ -25,16 +25,17 @@ def read_sensors():
     data_megmeet_alarm = snmp_megmeet_alarm.read_sensor_data(debug=False)
     time.sleep(1)
     data_ip = socket_ip.read_sensor_data(debug=False)
-    ip_value = data_ip
+    ip_value = str(data_ip)
     time.sleep(1)
     
     
     siteid = "BINTARO"
     
     status = {"online": 1,
-              "ip":str(ip_value)}
+              "ip":ip_value}
     status = json.dumps(status, indent=4)
-    
+    print(status)
+    print(type(status))
     return siteid,status
 
 
