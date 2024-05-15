@@ -111,7 +111,7 @@ def read_sensors():
         # "battery_charging_status" : battery_charging_status,
         # "total_ac_input_power":total_ac_input_power,
         }
-    
+    parameters = json.dumps(parameters, indent=4)
     return siteid,status,parameters
 
 
