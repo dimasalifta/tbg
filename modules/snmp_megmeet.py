@@ -217,6 +217,7 @@ def read_sensor_data(debug=False):
                 sensor_data[param_name] = {"value":val,
                                             "unit":unit,
                                             "type":f"{type(val)}"}
+                print(sensor_data)
         if debug:
             print("##################################################")
             print(f"{__file__}")
