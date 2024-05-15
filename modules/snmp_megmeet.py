@@ -112,7 +112,9 @@ list_parameter_megmeet = {
 
 
   
-  "rectifier_slots":["rectNum","1.3.6.1.4.1.40211.8.2.1.8.0"],
+  "rectifier_slots":["rectNum","1.3.6.1.4.1.40211.8.2.1.8.0",
+                     " ",
+                     "integer32"],
   
 #   "rectifier_1_address":["rectNum","1.3.6.1.4.1.40211.8.1.1.1.1"],
 #   "rectifier_1_input_voltage":["rectNum","1.3.6.1.4.1.40211.8.1.1.2.1"],
