@@ -80,8 +80,10 @@ def on_publish_tbg(payload,topic):
     if topic == 'TBGPower/T00Q56/status':
         client.will_set(topic, payload, qos=2, retain=True)
         client.publish(topic, payload, qos=2, retain=True)
+        print('masuk')
     else:
         # Kirim pesan ke topik MQTT
+        print('masuk else')
         client.publish(topic, payload)
     # Tutup koneksi
     client.disconnect()
