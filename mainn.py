@@ -13,6 +13,7 @@ topic2 = 'test'
 
 main_topic="TBGPower"
 sub_topic=""
+site_id = None  # Global variable for site_id
 def read_sensors():
     data_sht20 = rs485_sht20.read_sensor_data(debug=False)
     temperature = data_sht20['temperature']['value']
@@ -167,8 +168,14 @@ def on_connect_bintaro(client, userdata, flags, rc):
     client.subscribe(topic1)
 
 def on_connect_tbg(client, userdata, flags, rc):
+    global site_id
     print(f"Connected to {broker2} with result code {rc}")
     client.subscribe(topic2)
+    if site_id:
+        client.subscribe(f'{main_topic}/{site_id}/status', qos=2)
+        client.subscribe(f'{main_topic}/{site_id}/parameters', qos=1)
+        client.subscribe(f'{main_topic}/{site_id}/alarms', qos=2)
+        client.subscribe(f'{main_topic}/{site_id}/consumptions', qos=2)
 def on_message_bintaro(client, userdata, msg):
     print(f"Broker 1: {msg.topic} {msg.payload}")
   
@@ -240,7 +247,6 @@ def mqtt_process_bintaro():
     bintaro.loop_forever()
 
 def mqtt_process_tbg():
-    global site_id
     tbg = mqtt.Client()
     tbg.on_connect = on_connect_tbg
     tbg.on_message = on_message_tbg
