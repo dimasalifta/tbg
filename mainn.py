@@ -136,21 +136,21 @@ def on_publish_bintaro(payload,topic):
     # Hubungkan ke broker MQTT
     client.connect(broker1, 1883, 60)
 
-    if topic == 'TBGPower/T00Q56/status':
-        client.will_set(topic, payload, qos=2, retain=True)
-        client.publish(topic, payload, qos=2, retain=True)
+    # if topic == 'TBGPower/T00Q56/status':
+    #     client.will_set(topic, payload, qos=2, retain=True)
+    #     client.publish(topic, payload, qos=2, retain=True)
         
-    elif topic == 'TBGPower/T00Q56/parameters':
-        client.publish(topic, payload, qos=1, retain=False)
+    # elif topic == 'TBGPower/T00Q56/parameters':
+    #     client.publish(topic, payload, qos=1, retain=False)
         
-    elif topic == 'TBGPower/T00Q56/alarms':
-        client.publish(topic, payload, qos=2, retain=False)
+    # elif topic == 'TBGPower/T00Q56/alarms':
+    #     client.publish(topic, payload, qos=2, retain=False)
         
-    elif topic == 'TBGPower/T00Q56/consumption':
-        client.publish(topic, payload, qos=2, retain=False)
-    else:
-        # Kirim pesan ke topik MQTT
-        client.publish(topic, payload)
+    # elif topic == 'TBGPower/T00Q56/consumption':
+    #     client.publish(topic, payload, qos=2, retain=False)
+    # else:
+    #     # Kirim pesan ke topik MQTT
+    client.publish(topic, payload)
     # Tutup koneksi
     client.disconnect()
     
