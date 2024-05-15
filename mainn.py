@@ -240,6 +240,7 @@ def mqtt_process_bintaro():
     bintaro.loop_forever()
 
 def mqtt_process_tbg():
+    global site_id
     tbg = mqtt.Client()
     tbg.on_connect = on_connect_tbg
     tbg.on_message = on_message_tbg
