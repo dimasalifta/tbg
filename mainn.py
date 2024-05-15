@@ -34,8 +34,8 @@ def read_sensors():
     status = {"online": 1,
               "ip":ip_value}
     status = json.dumps(status, indent=4)
-    print(status)
-    print(type(status))
+    
+    
     return siteid,status
 
 
@@ -60,8 +60,12 @@ def on_publish_bintaro(payload,topic):
     # Hubungkan ke broker MQTT
     client.connect(broker1, 1883, 60)
 
-    # Kirim pesan ke topik MQTT
-    client.publish(topic, payload)
+    if topic == 'TBGPower/T00Q56/status':
+        client.will_set(topic, payload, qos=2, retain=True)
+        client.publish(topic, payload, qos=2, retain=True)
+    else:
+        # Kirim pesan ke topik MQTT
+        client.publish(topic, payload)
 
     # Tutup koneksi
     client.disconnect()
@@ -72,12 +76,16 @@ def on_publish_tbg(payload,topic):
     client.username_pw_set(username, password)
     # Hubungkan ke broker MQTT
     client.connect(broker2, 1884, 60)
-
-    # Kirim pesan ke topik MQTT
-    client.publish(topic, payload)
-
+    
+    if topic == 'TBGPower/T00Q56/status':
+        client.will_set(topic, payload, qos=2, retain=True)
+        client.publish(topic, payload, qos=2, retain=True)
+    else:
+        # Kirim pesan ke topik MQTT
+        client.publish(topic, payload)
     # Tutup koneksi
     client.disconnect()
+    
 def mqtt_process_bintaro():
     bintaro = mqtt.Client()
     bintaro.on_connect = on_connect_bintaro
@@ -96,8 +104,8 @@ def mqtt_process_tbg():
 def publish_data():
     while True:
         siteid,status = read_sensors()
-        on_publish_bintaro(siteid,'test')
-        on_publish_bintaro(status,'test')
+        on_publish_bintaro(siteid,'TBGPower/T00Q56/siteid')
+        on_publish_bintaro(status,'TBGPower/T00Q56/status')
         # on_publish_tbg()
         # time.sleep(5)
     # pass
