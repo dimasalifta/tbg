@@ -42,13 +42,37 @@ def on_message_bintaro(client, userdata, msg):
 def on_message_tbg(client, userdata, msg):
     print(f"Broker 2: {msg.topic} {msg.payload}")
 
+def on_publish_bintaro(payload):
+    # Buat instance client MQTT
+    client = mqtt.Client()
+
+    # Hubungkan ke broker MQTT
+    client.connect(broker1, 1883, 60)
+
+    # Kirim pesan ke topik MQTT
+    client.publish(topic1, payload)
+
+    # Tutup koneksi
+    client.disconnect()
+    
+def on_publish_tbg(payload):
+    # Buat instance client MQTT
+    client = mqtt.Client()
+    client.username_pw_set(username, password)
+    # Hubungkan ke broker MQTT
+    client.connect(broker2, 1884, 60)
+
+    # Kirim pesan ke topik MQTT
+    client.publish(topic2, payload)
+
+    # Tutup koneksi
+    client.disconnect()
 def mqtt_process_bintaro():
     bintaro = mqtt.Client()
     bintaro.on_connect = on_connect_bintaro
     bintaro.on_message = on_message_bintaro
     bintaro.connect(broker1, 1883, 60)
     bintaro.loop_forever()
-    return bintaro
 
 def mqtt_process_tbg():
     tbg = mqtt.Client()
@@ -57,21 +81,18 @@ def mqtt_process_tbg():
     tbg.username_pw_set(username, password)
     tbg.connect(broker2, 1884, 60)
     tbg.loop_forever()
-    return tbg
 
-def publish_data(client_bintaro, client_tbg):
+def publish_data():
     while True:
-        sensors_data = read_sensors()
-        sensors_data_str = str(sensors_data)
-        client_bintaro.publish(topic1, sensors_data_str)
-        client_tbg.publish(topic2, sensors_data_str)
-        time.sleep(60)  # Sleep for 1 minute
-
+        on_publish_bintaro(read_sensors)
+        time.sleep(5)
+    # pass
 if __name__ == "__main__":
     # Buat process untuk menjalankan client MQTT
     mqtt_bintaro_main = multiprocessing.Process(target=mqtt_process_bintaro)
     mqtt_bintaro_main.start()
     mqtt_tbg_main = multiprocessing.Process(target=mqtt_process_tbg)
     mqtt_tbg_main.start()
-    publish_data_main = multiprocessing.Process(target=publish_data(mqtt_bintaro_main,mqtt_tbg_main))
+    publish_data_main = multiprocessing.Process(target=publish_data)
     publish_data_main.start()
+    
