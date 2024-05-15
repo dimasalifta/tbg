@@ -135,7 +135,7 @@ def on_publish_bintaro(payload,topic):
 
     # Hubungkan ke broker MQTT
     client.connect(broker1, 1883, 60)
-
+    client.loop_start()
     # if topic == 'TBGPower/T00Q56/status':
     #     client.will_set(topic, payload, qos=2, retain=True)
     #     client.publish(topic, payload, qos=2, retain=True)
@@ -154,6 +154,7 @@ def on_publish_bintaro(payload,topic):
     # Wait for the publish to complete
     result.wait_for_publish()
     # Tutup koneksi
+    client.loop_stop()
     client.disconnect()
     
 def on_publish_tbg(payload,topic):
