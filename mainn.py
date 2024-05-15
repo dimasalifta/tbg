@@ -11,6 +11,8 @@ username = 'mosdev'
 password = 'Des2023!@'
 topic2 = 'test'
 
+main_topic="TBGPower"
+sub_topic=""
 def read_sensors():
     data_sht20 = rs485_sht20.read_sensor_data(debug=False)
     temperature = data_sht20['temperature']['value']
@@ -30,10 +32,11 @@ def read_sensors():
     l3_current = data_energy['l3_current']['value']
     ac_energy_consumption = data_energy['ac_energy_consumption']['value']
     time.sleep(1)
-    
+    global site_id
     data_megmeet = snmp_megmeet.read_sensor_data(debug=False)
     # print(data_megmeet)
     # print(type(data_megmeet))
+    site_id = data_megmeet['site_id']['value']
     system_voltage = data_megmeet['system_voltage']['value']
     system_current = data_megmeet['system_current']['value']
     battery1_current = data_megmeet['battery1_current']['value']
@@ -76,7 +79,7 @@ def read_sensors():
     time.sleep(1)
     
     
-    siteid = "BINTARO"
+    siteid = site_id
     
     status = {"online": 1,
               "ip":ip_value}
@@ -172,17 +175,17 @@ def on_publish_bintaro(payload,topic):
     # Hubungkan ke broker MQTT
     client.connect(broker1, 1883, 60)
     client.loop_start()
-    if topic == 'TBGPower/T00Q56/status':
+    if topic == f'{main_topic}/{site_id}/status':
         client.will_set(topic, payload, qos=2, retain=True)
         result = client.publish(topic, payload, qos=2, retain=True)
         
-    elif topic == 'TBGPower/T00Q56/parameters':
+    elif topic == f'{main_topic}/{site_id}/parameters':
         result = client.publish(topic, payload, qos=1, retain=False)
         
-    elif topic == 'TBGPower/T00Q56/alarms':
+    elif topic == f'{main_topic}/{site_id}/alarms':
         result = client.publish(topic, payload, qos=2, retain=False)
         
-    elif topic == 'TBGPower/T00Q56/consumption':
+    elif topic == f'{main_topic}/{site_id}/consumption':
         result = client.publish(topic, payload, qos=2, retain=False)
     else:
         # Kirim pesan ke topik MQTT
@@ -201,17 +204,17 @@ def on_publish_tbg(payload,topic):
     client.connect(broker2, 1884, 60)
     
     client.loop_start()
-    if topic == 'TBGPower/T00Q56/status':
+    if topic == f'{main_topic}/{site_id}/status':
         client.will_set(topic, payload, qos=2, retain=True)
         result = client.publish(topic, payload, qos=2, retain=True)
         
-    elif topic == 'TBGPower/T00Q56/parameters':
+    elif topic == f'{main_topic}/{site_id}/parameters':
         result = client.publish(topic, payload, qos=1, retain=False)
         
-    elif topic == 'TBGPower/T00Q56/alarms':
+    elif topic == f'{main_topic}/{site_id}/alarms':
         result = client.publish(topic, payload, qos=2, retain=False)
         
-    elif topic == 'TBGPower/T00Q56/consumption':
+    elif topic == f'{main_topic}/{site_id}/consumption':
         result = client.publish(topic, payload, qos=2, retain=False)
     else:
         # Kirim pesan ke topik MQTT
@@ -240,17 +243,17 @@ def mqtt_process_tbg():
 def publish_data():
     while True:
         siteid,status,parameters,alarms,consumptions = read_sensors()
-        on_publish_bintaro(siteid,'TBGPower/T00Q56/siteid')
-        on_publish_bintaro(status,'TBGPower/T00Q56/status')
-        on_publish_bintaro(parameters,'TBGPower/T00Q56/parameters')
-        on_publish_bintaro(alarms,'TBGPower/T00Q56/alarms')
-        on_publish_bintaro(consumptions,'TBGPower/T00Q56/consumptions')
+        # on_publish_bintaro(siteid,f'{main_topic}/{site_id}/siteid')
+        on_publish_bintaro(status,f'{main_topic}/{site_id}/status')
+        on_publish_bintaro(parameters,f'{main_topic}/{site_id}/parameters')
+        on_publish_bintaro(alarms,f'{main_topic}/{site_id}/alarms')
+        on_publish_bintaro(consumptions,f'{main_topic}/{site_id}/consumptions')
         
-        on_publish_tbg(siteid,'TBGPower/T00Q56/siteid')
-        on_publish_tbg(status,'TBGPower/T00Q56/status')
-        on_publish_tbg(parameters,'TBGPower/T00Q56/parameters')
-        on_publish_tbg(alarms,'TBGPower/T00Q56/alarms')
-        on_publish_tbg(consumptions,'TBGPower/T00Q56/consumptions')
+        # on_publish_tbg(siteid,f'{main_topic}/{site_id}/siteid')
+        on_publish_tbg(status,f'{main_topic}/{site_id}/status')
+        on_publish_tbg(parameters,f'{main_topic}/{site_id}/parameters')
+        on_publish_tbg(alarms,f'{main_topic}/{site_id}/alarms')
+        on_publish_tbg(consumptions,f'{main_topic}/{site_id}/consumptions')
         # on_publish_tbg()
         # time.sleep(5)
     # pass
