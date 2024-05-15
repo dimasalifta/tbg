@@ -40,7 +40,7 @@ def read_sensors():
     battery2_current = data_megmeet['battery2_current']['value']
     total_battery_current = data_megmeet['total_battery_current']['value']
     battery1_temperature = data_megmeet['battery1_temperature']['value']
-    battery2_temperature = data_megmeet['battery2_current']['value']
+    battery2_temperature = data_megmeet['battery1_temperature']['value']
     battery1_capacity = data_megmeet['battery1_capacity']['value']
     battery2_capacity = data_megmeet['battery2_capacity']['value']
     battery_energy = data_megmeet['battery_energy']['value']
@@ -90,39 +90,39 @@ def read_sensors():
                         "L2":l2_current,
                         "L3":l3_current},
         
-        "DC Voltage": system_voltage,
-        "DC Current": system_current,
-        "DC Output Voltage":system_voltage,
-        "DC Output Current":system_current, 
-        "DC Total Power":battery_energy,
+        "DC Voltage": system_voltage*0.001,
+        "DC Current": system_current*0.001,
+        "DC Output Voltage":system_voltage*0.001,
+        "DC Output Current":system_current*0.001, 
+        "DC Total Power":battery_energy*0.001,
 
-        "Rectifier Total Current":rectifier_total_current,
+        "Rectifier Total Current":rectifier_total_current*0.1,
         
         "AC Consumption":ac_energy_consumption,
-        "DC Consumption":battery_energy,
+        "DC Consumption":battery_energy*0.001,
         
         
-        "Battery Capacity":total_remaining_capacity_percent,
+        "Battery Capacity":total_remaining_capacity_percent*0.1,
         
         "Battery Current":total_battery_current,
         
-        "Battery Voltage":system_voltage,
+        "Battery Voltage":system_voltage*0.001,
         
         # "Backup Time" : backup_time,
-        "Battery Temperature":{"Battery 1":battery1_temperature,
-                                "Battery 2":battery2_temperature},
+        "Battery Temperature":{"Battery 1":battery1_temperature*0.001,
+                                "Battery 2":battery2_temperature*0.001},
         
-        "Recitifier Temperature":{"Rectifier 1": rectifier1_temperature,
-                                    "Rectifier 2": rectifier2_temperature,
-                                    "Rectifier 3": rectifier3_temperature},
+        "Recitifier Temperature":{"Rectifier 1": rectifier1_temperature*0.1,
+                                    "Rectifier 2": rectifier2_temperature*0.1,
+                                    "Rectifier 3": rectifier3_temperature*0.1},
         
-        "Rectifier Installed":rectifier_quantity,
+        "Rectifier Installed":rectifier_quantity-3,
         "Recitifier Serial Number":{"Rectifier 1": rectifier1_serial_number,
                                     "Rectifier 2": rectifier2_serial_number,
                                     "Rectifier 3": rectifier3_serial_number},
-        "Recitifier Load Usage":{"Rectifier 1": rectifier1_load_usage,
-                                    "Rectifier 2": rectifier2_load_usage,
-                                    "Rectifier 3": rectifier3_load_usage},
+        "Recitifier Load Usage":{"Rectifier 1": rectifier1_load_usage*0.1,
+                                    "Rectifier 2": rectifier2_load_usage*0.1,
+                                    "Rectifier 3": rectifier3_load_usage}*0.1,
         "Recitifier Status":{"Rectifier 1": rectifier1_status,
                                     "Rectifier 2": rectifier2_status,
                                     "Rectifier 3": rectifier3_status},
@@ -146,7 +146,7 @@ def read_sensors():
     alarms = json.dumps(alarms, indent=4)
     
     consumptions = {"AC": ac_energy_consumption,
-                    "DC":battery_energy}
+                    "DC":battery_energy*0.001}
     consumptions = json.dumps(consumptions, indent=4)
     return siteid,status,parameters,alarms,consumptions
 
