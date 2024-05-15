@@ -30,11 +30,14 @@ def read_sensors():
     ac_energy_consumption = data_energy['ac_energy_consumption']['value']
     time.sleep(1)
     
-    data_megmeet = snmp_megmeet.read_sensor_data(debug=False)
+    data_megmeet = snmp_megmeet.read_sensor_data(debug=True)
     # print(data_megmeet)
     # print(type(data_megmeet))
     system_voltage = data_megmeet['system_voltage']['value']
     system_current = data_megmeet['system_current']['value']
+    battery1_current = data_megmeet['battery1_current']['value']
+    battery2_current = data_megmeet['battery2_current']['value']
+    total_battery_current = data_megmeet['total_battery_current']['value']
     battery1_capacity = data_megmeet['battery1_capacity']['value']
     battery2_capacity = data_megmeet['battery2_capacity']['value']
     battery_energy = data_megmeet['battery_energy']['value']
@@ -84,9 +87,9 @@ def read_sensors():
         "DC Consumption":battery_energy,
         
         
-        "Battery Capacity":total_remaining_capacity_percent
+        "Battery Capacity":total_remaining_capacity_percent,
         
-        # "Battery Current    ":total_battery_current,
+        "Battery Current":total_battery_current
         
         # "Backup Time" : backup_time,
         # "Battery Temperature":{"Battery 1":battery1_temperature,
