@@ -168,8 +168,11 @@ def on_connect_bintaro(client, userdata, flags, rc):
 
 def on_connect_tbg(client, userdata, flags, rc):
     print(f"Connected to {broker2} with result code {rc}")
-    client.subscribe(topic2)
-    
+    # client.subscribe(topic2)
+    client.subscribe(f'{main_topic}/{site_id}/status', qos=2)
+    client.subscribe(f'{main_topic}/{site_id}/parameters', qos=1)
+    client.subscribe(f'{main_topic}/{site_id}/alarms', qos=2)
+    client.subscribe(f'{main_topic}/{site_id}/consumptions', qos=2)
 def on_message_bintaro(client, userdata, msg):
     print(f"Broker 1: {msg.topic} {msg.payload}")
   
