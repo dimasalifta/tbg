@@ -30,7 +30,7 @@ def read_sensors():
     ac_energy_consumption = data_energy['ac_energy_consumption']['value']
     time.sleep(1)
     
-    data_megmeet = snmp_megmeet.read_sensor_data(debug=False)
+    data_megmeet = snmp_megmeet.read_sensor_data(debug=True)
     # print(data_megmeet)
     # print(type(data_megmeet))
     system_voltage = data_megmeet['system_voltage']['value']

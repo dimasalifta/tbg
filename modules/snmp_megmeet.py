@@ -87,9 +87,9 @@ list_parameter_megmeet = {
   "battery1_capacity":["psBatteryCapacity1","1.3.6.1.4.1.40211.3.1.1.4.0"],
   "battery2_capacity":["psBatteryCapacity2","1.3.6.1.4.1.40211.3.1.1.5.0"],
   "battery_energy":["battEnergy",
-                           "1.3.6.1.4.1.40211.3.1.1.21.0",
-                           "Wh",
-                           "integer32"],
+                    "1.3.6.1.4.1.40211.3.1.1.21.0",
+                    "Wh",
+                    "integer32"],
 # #   "battery_slots":["battNum","1.3.6.1.4.1.40211.3.1.1.10.0"],
   
 
