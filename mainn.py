@@ -57,7 +57,7 @@ def read_sensors():
     total_battery_current = total_battery_current * 0.001
     total_remaining_capacity_percent = (battery1_capacity+battery2_capacity)/2
     total_rate_capacity = data_megmeet['battery_nominal_capacity']['value']
-    total_remaining_capacity = total_rate_capacity * (total_remaining_capacity_percent / 100)
+    total_remaining_capacity = total_rate_capacity * ((total_remaining_capacity_percent*0.1) / 100)
     
     if float(total_dc_load_current) != 0 :
         backup_time = total_remaining_capacity / float(total_battery_current)
@@ -121,6 +121,8 @@ def read_sensors():
         
         
         "Battery Capacity":total_remaining_capacity_percent*0.1,
+        "Battery Capacity Ah":total_remaining_capacity,
+        "Total Rate Capacity Ah":total_rate_capacity,
         
         "Battery Current":total_battery_current,
         
