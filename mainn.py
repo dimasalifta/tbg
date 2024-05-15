@@ -84,7 +84,7 @@ def read_sensors():
         "DC Consumption":battery_energy,
         
         
-        "Battery Capacity":total_remaining_capacity_percent,
+        "Battery Capacity":total_remaining_capacity_percent
         
         # "Battery Current    ":total_battery_current,
         
