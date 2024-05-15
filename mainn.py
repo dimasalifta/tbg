@@ -151,7 +151,7 @@ def read_sensors():
         "Humidity" : humidity,
         
         # "total_remaining_capacity":total_remaining_capacity,
-        "Total DC Load Current":total_dc_load_current
+        "Total DC Load Current":round(total_dc_load_current,2)
         # "total_dc_load_power":total_dc_load_power,
         # "rectifier_rate_voltage":rectifier_rate_voltage,
         # "battery1_current":battery1_current,
