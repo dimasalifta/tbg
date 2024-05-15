@@ -19,8 +19,8 @@ def read_sensors():
     time.sleep(1)
         
     data_energy = rs485_energy.read_sensor_data(debug=False)
-    print(data_energy)
-    print(type(data_energy))
+    # print(data_energy)
+    # print(type(data_energy))
     l1_voltage = data_energy['l1_voltage']['value']
     l2_voltage = data_energy['l2_voltage']['value']
     l3_voltage = data_energy['l3_voltage']['value']
@@ -31,8 +31,8 @@ def read_sensors():
     time.sleep(1)
     
     data_megmeet = snmp_megmeet.read_sensor_data(debug=False)
-    print(data_megmeet)
-    print(type(data_megmeet))
+    # print(data_megmeet)
+    # print(type(data_megmeet))
     # system_voltage = data_megmeet['system_voltage']['value']
     # system_current = data_megmeet['system_current']['value']
     # battery_energy = data_megmeet['battery_energy']['value']
