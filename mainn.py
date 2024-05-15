@@ -13,7 +13,8 @@ topic2 = 'test'
 
 def read_sensors():
     data_sht20 = rs485_sht20.read_sensor_data(debug=False)
-    temperature_value = data_sht20['temperature']['value']
+    temperature = data_sht20['temperature']['value']
+    humidity = data_sht20['temperature']['value']
     # print(temperature_value)
     # print(type(temperature_value))
     time.sleep(1)
@@ -38,21 +39,35 @@ def read_sensors():
     battery1_current = data_megmeet['battery1_current']['value']
     battery2_current = data_megmeet['battery2_current']['value']
     total_battery_current = data_megmeet['total_battery_current']['value']
+    battery1_temperature = data_megmeet['battery1_temperature']['value']
+    battery2_temperature = data_megmeet['battery2_current']['value']
     battery1_capacity = data_megmeet['battery1_capacity']['value']
     battery2_capacity = data_megmeet['battery2_capacity']['value']
     battery_energy = data_megmeet['battery_energy']['value']
     
     total_remaining_capacity_percent = (battery1_capacity+battery2_capacity)/2
-
+    rectifier_quantity = data_megmeet['rectifier_quantity']['value']
     rectifier1_output_current = data_megmeet['rectifier1_output_current']['value']
     rectifier2_output_current = data_megmeet['rectifier2_output_current']['value']
     rectifier3_output_current = data_megmeet['rectifier3_output_current']['value']
     rectifier_total_current = rectifier1_output_current + rectifier2_output_current + rectifier3_output_current
     
-    # l3_voltage = data_megmeet['l3_voltage']['value']
-    # l1_current = data_megmeet['l1_current']['value']
-    # l3_current = data_megmeet['l3_current']['value']
-    # ac_energy_consumption = data_energy['ac_nergy_consumption']['value']
+    rectifier1_temperature = data_megmeet['rectifier1_temperature']['value']
+    rectifier2_temperature = data_megmeet['rectifier2_temperature']['value']
+    rectifier3_temperature = data_megmeet['rectifier3_temperature']['value']
+    
+    rectifier1_status = data_megmeet['rectifier1_status']['value']
+    rectifier2_status = data_megmeet['rectifier2_status']['value']
+    rectifier3_status = data_megmeet['rectifier3_status']['value']
+    
+    rectifier1_load_usage = data_megmeet['rectifier1_load_usage']['value']
+    rectifier2_load_usage = data_megmeet['rectifier2_load_usage']['value']
+    rectifier3_load_usage = data_megmeet['rectifier3_load_usage']['value']
+    
+    rectifier1_serial_number = data_megmeet['rectifier1_serial_number']['value']
+    rectifier2_serial_number = data_megmeet['rectifier2_serial_number']['value']
+    rectifier3_serial_number = data_megmeet['rectifier3_serial_number']['value']
+
     time.sleep(1)
     data_megmeet_alarm = snmp_megmeet_alarm.read_sensor_data(debug=False)
     time.sleep(1)
@@ -89,26 +104,30 @@ def read_sensors():
         
         "Battery Capacity":total_remaining_capacity_percent,
         
-        "Battery Current":total_battery_current
+        "Battery Current":total_battery_current,
+        
+        "Battery Voltage":system_voltage,
         
         # "Backup Time" : backup_time,
-        # "Battery Temperature":{"Battery 1":battery1_temperature,
-        #                         "Battery 2":battery2_temperature},
-        # "Recitifier Temperature":{"Rectifier 1": rectifier1_temperature,
-        #                             "Rectifier 2": rectifier2_temperature,
-        #                             "Rectifier 3": rectifier3_temperature},
-        # "Rectifier Installed":rectifier_quantity,
-        # "Recitifier Serial Number":{"Rectifier 1": rectifier1_serial_number,
-        #                             "Rectifier 2": rectifier2_serial_number,
-        #                             "Rectifier 3": rectifier3_serial_number},
-        # "Recitifier Load Usage":{"Rectifier 1": rectifier1_load_usage,
-        #                             "Rectifier 2": rectifier2_load_usage,
-        #                             "Rectifier 3": rectifier3_load_usage},
-        # "Recitifier Status":{"Rectifier 1": rectifier1_status,
-        #                             "Rectifier 2": rectifier2_status,
-        #                             "Rectifier 3": rectifier3_status},
-        # "Temperature" : "nan",
-        # "Humidity" : "nan",
+        "Battery Temperature":{"Battery 1":battery1_temperature,
+                                "Battery 2":battery2_temperature},
+        
+        "Recitifier Temperature":{"Rectifier 1": rectifier1_temperature,
+                                    "Rectifier 2": rectifier2_temperature,
+                                    "Rectifier 3": rectifier3_temperature},
+        
+        "Rectifier Installed":rectifier_quantity,
+        "Recitifier Serial Number":{"Rectifier 1": rectifier1_serial_number,
+                                    "Rectifier 2": rectifier2_serial_number,
+                                    "Rectifier 3": rectifier3_serial_number},
+        "Recitifier Load Usage":{"Rectifier 1": rectifier1_load_usage,
+                                    "Rectifier 2": rectifier2_load_usage,
+                                    "Rectifier 3": rectifier3_load_usage},
+        "Recitifier Status":{"Rectifier 1": rectifier1_status,
+                                    "Rectifier 2": rectifier2_status,
+                                    "Rectifier 3": rectifier3_status},
+        "Temperature" : temperature,
+        "Humidity" : humidity,
         
         # "total_remaining_capacity":total_remaining_capacity,
         # "total_dc_load_current":total_dc_load_current,
