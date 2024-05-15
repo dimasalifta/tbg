@@ -16,6 +16,7 @@ def read_sensor_data(debug=False):
 
     # List to store results
     results = []
+    sensor_data = {}
     try:
         # Iterate over x and y values
         for x in range(1, 7):
