@@ -168,11 +168,7 @@ def on_connect_bintaro(client, userdata, flags, rc):
 
 def on_connect_tbg(client, userdata, flags, rc):
     print(f"Connected to {broker2} with result code {rc}")
-    # client.subscribe(topic2)
-    client.subscribe(f'{main_topic}/{site_id}/status', qos=2)
-    client.subscribe(f'{main_topic}/{site_id}/parameters', qos=1)
-    client.subscribe(f'{main_topic}/{site_id}/alarms', qos=2)
-    client.subscribe(f'{main_topic}/{site_id}/consumptions', qos=2)
+    client.subscribe(topic2)
 def on_message_bintaro(client, userdata, msg):
     print(f"Broker 1: {msg.topic} {msg.payload}")
   
@@ -249,16 +245,20 @@ def mqtt_process_tbg():
     tbg.on_message = on_message_tbg
     tbg.username_pw_set(username, password)
     tbg.connect(broker2, 1884, 60)
+    tbg.subscribe(f'{main_topic}/{site_id}/status', qos=2)
+    tbg.subscribe(f'{main_topic}/{site_id}/parameters', qos=1)
+    tbg.subscribe(f'{main_topic}/{site_id}/alarms', qos=2)
+    tbg.subscribe(f'{main_topic}/{site_id}/consumptions', qos=2)
     tbg.loop_forever()
 
 def publish_data():
     while True:
         siteid,status,parameters,alarms,consumptions = read_sensors()
         # on_publish_bintaro(siteid,f'{main_topic}/{site_id}/siteid')
-        on_publish_bintaro(status,f'{main_topic}/{site_id}/status')
-        on_publish_bintaro(parameters,f'{main_topic}/{site_id}/parameters')
-        on_publish_bintaro(alarms,f'{main_topic}/{site_id}/alarms')
-        on_publish_bintaro(consumptions,f'{main_topic}/{site_id}/consumptions')
+        # on_publish_bintaro(status,f'{main_topic}/{site_id}/status')
+        # on_publish_bintaro(parameters,f'{main_topic}/{site_id}/parameters')
+        # on_publish_bintaro(alarms,f'{main_topic}/{site_id}/alarms')
+        # on_publish_bintaro(consumptions,f'{main_topic}/{site_id}/consumptions')
         
         # on_publish_tbg(siteid,f'{main_topic}/{site_id}/siteid')
         on_publish_tbg(status,f'{main_topic}/{site_id}/status')
