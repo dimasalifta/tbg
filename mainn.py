@@ -43,6 +43,10 @@ def read_sensors():
     rectifier3_output_current = data_megmeet['rectifier3_output_current']['value']
     rectifier_total_current = rectifier1_output_current + rectifier2_output_current + rectifier3_output_current
     
+    battery1_capacity = data_megmeet['battery1_capacity']['value']
+    battery2_capacity = data_megmeet['battery2_capacity']['value']
+    
+    total_remaining_capacity_percent = (battery1_capacity+battery2_capacity)/2
     # l3_voltage = data_megmeet['l3_voltage']['value']
     # l1_current = data_megmeet['l1_current']['value']
     # l3_current = data_megmeet['l3_current']['value']
@@ -75,9 +79,13 @@ def read_sensors():
         "DC Output Current":system_current, 
         "DC Total Power":battery_energy,
 
-        "Rectifier Total Current":rectifier_total_current
+        "Rectifier Total Current":rectifier_total_current,
         
-        # "Battery Capacity":total_remaining_capacity_percent,
+        "AC Consumption":ac_energy_consumption,
+        "DC Consumption":battery_energy,
+        
+        
+        "Battery Capacity":total_remaining_capacity_percent
         
         # "Battery Current    ":total_battery_current,
         
