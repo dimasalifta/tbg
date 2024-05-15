@@ -12,20 +12,22 @@ password = 'Des2023!@'
 topic2 = 'test'
 
 def read_sensors():
-    data_sht20 = rs485_sht20.read_sensor_data(debug=True)
+    data_sht20 = rs485_sht20.read_sensor_data(debug=False)
+    temperature_value = data_sht20['temperature']['value']
+    print(temperature_value)
+    print(type(temperature_value))
+    
     time.sleep(1)
-    data_energy = rs485_energy.read_sensor_data(debug=True)
+    data_energy = rs485_energy.read_sensor_data(debug=False)
     time.sleep(1)
-    data_megmeet = snmp_megmeet.read_sensor_data(debug=True)
+    data_megmeet = snmp_megmeet.read_sensor_data(debug=False)
     time.sleep(1)
-    data_megmeet_alarm = snmp_megmeet_alarm.read_sensor_data(debug=True)
+    data_megmeet_alarm = snmp_megmeet_alarm.read_sensor_data(debug=False)
     time.sleep(1)
-    return {
-        'sht20': data_sht20,
-        'energy': data_energy,
-        'megmeet': data_megmeet,
-        'megmeet_alarm': data_megmeet_alarm
-    }
+    
+    
+    all_parameter = 0
+    return all_parameter
 
 
 def on_connect_bintaro(client, userdata, flags, rc):
@@ -84,6 +86,7 @@ def mqtt_process_tbg():
 
 def publish_data():
     while True:
+        
         on_publish_bintaro(str(read_sensors()))
         on_publish_tbg(str(read_sensors()))
         time.sleep(5)
