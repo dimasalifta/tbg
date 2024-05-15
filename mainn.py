@@ -1,4 +1,4 @@
-from modules import rs485_sht20,rs485_energy,snmp_megmeet,snmp_megmeet_alarm
+from modules import rs485_sht20,rs485_energy,snmp_megmeet,snmp_megmeet_alarm,socket_ip
 import time
 import paho.mqtt.client as mqtt
 import multiprocessing
@@ -24,10 +24,17 @@ def read_sensors():
     time.sleep(1)
     data_megmeet_alarm = snmp_megmeet_alarm.read_sensor_data(debug=False)
     time.sleep(1)
+    data_ip = socket_ip.read_sensor_data(debug=False)
+    ip_value = data_ip
+    time.sleep(1)
     
     
-    all_parameter = 0
-    return all_parameter
+    siteid = "BINTARO"
+    status = {"online": 1,
+              "ip":str(ip_value)}
+    
+    
+    return siteid,status
 
 
 def on_connect_bintaro(client, userdata, flags, rc):
@@ -44,7 +51,7 @@ def on_message_bintaro(client, userdata, msg):
 def on_message_tbg(client, userdata, msg):
     print(f"Broker 2: {msg.topic} {msg.payload}")
 
-def on_publish_bintaro(payload):
+def on_publish_bintaro(payload,topic):
     # Buat instance client MQTT
     client = mqtt.Client()
 
@@ -52,12 +59,12 @@ def on_publish_bintaro(payload):
     client.connect(broker1, 1883, 60)
 
     # Kirim pesan ke topik MQTT
-    client.publish(topic1, payload)
+    client.publish(topic, payload)
 
     # Tutup koneksi
     client.disconnect()
     
-def on_publish_tbg(payload):
+def on_publish_tbg(payload,topic):
     # Buat instance client MQTT
     client = mqtt.Client()
     client.username_pw_set(username, password)
@@ -65,7 +72,7 @@ def on_publish_tbg(payload):
     client.connect(broker2, 1884, 60)
 
     # Kirim pesan ke topik MQTT
-    client.publish(topic2, payload)
+    client.publish(topic, payload)
 
     # Tutup koneksi
     client.disconnect()
@@ -86,9 +93,10 @@ def mqtt_process_tbg():
 
 def publish_data():
     while True:
-        
-        on_publish_bintaro(str(read_sensors()))
-        on_publish_tbg(str(read_sensors()))
+        siteid,status = read_sensors()
+        on_publish_bintaro(siteid,'test')
+        on_publish_bintaro(status,'test')
+        # on_publish_tbg()
         time.sleep(5)
     # pass
 if __name__ == "__main__":
