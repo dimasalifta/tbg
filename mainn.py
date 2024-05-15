@@ -127,7 +127,7 @@ def read_sensors():
                                     "Rectifier 2": rectifier2_status,
                                     "Rectifier 3": rectifier3_status},
         "Temperature" : temperature,
-        "Humidity" : humidity,
+        "Humidity" : humidity
         
         # "total_remaining_capacity":total_remaining_capacity,
         # "total_dc_load_current":total_dc_load_current,
