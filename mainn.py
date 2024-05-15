@@ -61,12 +61,14 @@ def on_publish_bintaro(payload,topic):
     client.connect(broker1, 1883, 60)
 
     if topic == 'TBGPower/T00Q56/status':
+        print('mnasukj1')
         client.will_set(topic, payload, qos=2, retain=True)
         client.publish(topic, payload, qos=2, retain=True)
     else:
         # Kirim pesan ke topik MQTT
+        print('mnasukj2')
         client.publish(topic, payload)
-
+        print('3')
     # Tutup koneksi
     client.disconnect()
     
@@ -78,12 +80,10 @@ def on_publish_tbg(payload,topic):
     client.connect(broker2, 1884, 60)
     
     if topic == 'TBGPower/T00Q56/status':
-        print('masuk')
+        client.will_set(topic, payload, qos=2, retain=True)
         client.publish(topic, payload, qos=2, retain=True)
-        
     else:
         # Kirim pesan ke topik MQTT
-        print('masuk else')
         client.publish(topic, payload)
     # Tutup koneksi
     client.disconnect()
