@@ -84,7 +84,8 @@ def mqtt_process_tbg():
 
 def publish_data():
     while True:
-        on_publish_bintaro(read_sensors)
+        on_publish_bintaro(str(read_sensors))
+        on_publish_tbg(str(read_sensors))
         time.sleep(5)
     # pass
 if __name__ == "__main__":
