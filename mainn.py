@@ -25,7 +25,7 @@ def read_sensors():
     l1_current = data_energy['l1_current']['value']
     l2_current = data_energy['l2_current']['value']
     l3_current = data_energy['l3_current']['value']
-    ac_energy_consumption = data_energy['ac_nergy_consumption']['value']
+    ac_energy_consumption = data_energy['ac_energy_consumption']['value']
     time.sleep(1)
     
     data_megmeet = snmp_megmeet.read_sensor_data(debug=True)
