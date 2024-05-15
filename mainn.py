@@ -62,6 +62,7 @@ def read_sensors():
     
     if float(total_dc_load_current) != 0 :
         backup_time = total_remaining_capacity / float(total_dc_load_current)
+        backup_time = backup_time * 60
     else:
         backup_time = "-"
     rectifier_quantity = data_megmeet['rectifier_slots']['value']
