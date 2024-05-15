@@ -150,7 +150,7 @@ def on_publish_bintaro(payload,topic):
     #     client.publish(topic, payload, qos=2, retain=False)
     # else:
     #     # Kirim pesan ke topik MQTT
-    client.publish(topic, payload)
+    client.publish(topic, payload, qos=1)
     # Tutup koneksi
     client.disconnect()
     
