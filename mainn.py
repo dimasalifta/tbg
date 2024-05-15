@@ -47,8 +47,15 @@ def read_sensors():
     battery1_capacity = data_megmeet['battery1_capacity']['value']
     battery2_capacity = data_megmeet['battery2_capacity']['value']
     battery_energy = data_megmeet['battery_energy']['value']
-    
+    total_dc_load_current = data_megmeet['total_dc_load_current']['value']
     total_remaining_capacity_percent = (battery1_capacity+battery2_capacity)/2
+    total_rate_capacity = data_megmeet['battery_nominal_capacity']['value']
+    total_remaining_capacity = total_rate_capacity * (total_remaining_capacity_percent / 100)
+    
+    if float(total_dc_load_current) > 0 :
+        backup_time = total_remaining_capacity / float(total_battery_current)
+    else:
+        backup_time = "-"
     rectifier_quantity = data_megmeet['rectifier_slots']['value']
     rectifier1_output_current = data_megmeet['rectifier1_output_current']['value']
     rectifier2_output_current = data_megmeet['rectifier2_output_current']['value']
@@ -71,6 +78,7 @@ def read_sensors():
     rectifier2_serial_number = data_megmeet['rectifier2_serial_number']['value']
     rectifier3_serial_number = data_megmeet['rectifier3_serial_number']['value']
 
+    
     time.sleep(1)
     data_megmeet_alarm = snmp_megmeet_alarm.read_sensor_data(debug=False)
     time.sleep(1)
@@ -111,7 +119,7 @@ def read_sensors():
         
         "Battery Voltage":system_voltage*0.001,
         
-        # "Backup Time" : backup_time,
+        "Backup Time" : backup_time,
         "Battery Temperature":{"Battery 1":battery1_temperature*0.001,
                                 "Battery 2":battery2_temperature*0.001},
         

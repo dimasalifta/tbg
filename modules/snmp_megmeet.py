@@ -76,7 +76,10 @@ list_parameter_megmeet = {
                           "1.3.6.1.4.1.40211.5.1.1.2.0",
                           "Celcius",
                           "integer32"],
-# #   "total_dc_load_current":["psBatteryCurrent","1.3.6.1.4.1.40211.3.1.1.1.0"],
+  "total_dc_load_current":["psBatteryCurrent",
+                           "1.3.6.1.4.1.40211.3.1.1.1.0",
+                           "A",
+                           "integer32"],
 
 # #   "total_dc_load_power":["battEnergy","1.3.6.1.4.1.40211.3.1.1.21.0"],
 
