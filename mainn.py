@@ -39,6 +39,7 @@ def read_sensors():
     battery2_capacity = data_megmeet['battery2_capacity']['value']
     battery_energy = data_megmeet['battery_energy']['value']
     
+    total_remaining_capacity_percent = (battery1_capacity+battery2_capacity)/2
 
     rectifier1_output_current = data_megmeet['rectifier1_output_current']['value']
     rectifier2_output_current = data_megmeet['rectifier2_output_current']['value']
@@ -83,7 +84,7 @@ def read_sensors():
         "DC Consumption":battery_energy,
         
         
-        # "Battery Capacity":total_remaining_capacity_percent,
+        "Battery Capacity":total_remaining_capacity_percent,
         
         # "Battery Current    ":total_battery_current,
         
