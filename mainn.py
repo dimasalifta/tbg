@@ -11,15 +11,21 @@ username = 'mosdev'
 password = 'Des2023!@'
 topic2 = 'test'
 
-# Read sensor data
-data_sht20          = rs485_sht20.          read_sensor_data(debug=True)
-time.sleep(1)
-data_energy         = rs485_energy.         read_sensor_data(debug=True)
-time.sleep(1)
-data_megmeet        = snmp_megmeet.         read_sensor_data(debug=True)
-time.sleep(1)
-data_megmeet_alarm  = snmp_megmeet_alarm.   read_sensor_data(debug=True)
-time.sleep(1)
+def read_sensors():
+    data_sht20 = rs485_sht20.read_sensor_data(debug=True)
+    time.sleep(1)
+    data_energy = rs485_energy.read_sensor_data(debug=True)
+    time.sleep(1)
+    data_megmeet = snmp_megmeet.read_sensor_data(debug=True)
+    time.sleep(1)
+    data_megmeet_alarm = snmp_megmeet_alarm.read_sensor_data(debug=True)
+    time.sleep(1)
+    return {
+        'sht20': data_sht20,
+        'energy': data_energy,
+        'megmeet': data_megmeet,
+        'megmeet_alarm': data_megmeet_alarm
+    }
 
 
 def on_connect_bintaro(client, userdata, flags, rc):
@@ -42,6 +48,7 @@ def mqtt_process_bintaro():
     bintaro.on_message = on_message_bintaro
     bintaro.connect(broker1, 1883, 60)
     bintaro.loop_forever()
+    return bintaro
 
 def mqtt_process_tbg():
     tbg = mqtt.Client()
@@ -50,7 +57,15 @@ def mqtt_process_tbg():
     tbg.username_pw_set(username, password)
     tbg.connect(broker2, 1884, 60)
     tbg.loop_forever()
-    
+    return tbg
+
+def publish_data(client_bintaro, client_tbg):
+    while True:
+        sensors_data = read_sensors()
+        sensors_data_str = str(sensors_data)
+        client_bintaro.publish(topic1, sensors_data_str)
+        client_tbg.publish(topic2, sensors_data_str)
+        time.sleep(60)  # Sleep for 1 minute
 
 if __name__ == "__main__":
     # Buat process untuk menjalankan client MQTT
@@ -58,3 +73,5 @@ if __name__ == "__main__":
     mqtt_bintaro_main.start()
     mqtt_tbg_main = multiprocessing.Process(target=mqtt_process_tbg)
     mqtt_tbg_main.start()
+    publish_data_main = multiprocessing.Process(target=publish_data(mqtt_bintaro_main,mqtt_tbg_main))
+    publish_data_main.start()
