@@ -46,7 +46,7 @@ def read_sensors():
     battery_energy = data_megmeet['battery_energy']['value']
     
     total_remaining_capacity_percent = (battery1_capacity+battery2_capacity)/2
-    rectifier_quantity = data_megmeet['rectifier_quantity']['value']
+    rectifier_quantity = data_megmeet['rectifier_slots']['value']
     rectifier1_output_current = data_megmeet['rectifier1_output_current']['value']
     rectifier2_output_current = data_megmeet['rectifier2_output_current']['value']
     rectifier3_output_current = data_megmeet['rectifier3_output_current']['value']
