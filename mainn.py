@@ -20,7 +20,7 @@ def read_sensors():
         
     data_energy = rs485_energy.read_sensor_data(debug=False)
     l1_voltage = data_energy['l1_voltage']['value']
-    l2_voltage = data_energy['l2_votlage']['value']
+    l2_voltage = data_energy['l2_voltage']['value']
     l3_voltage = data_energy['l3_voltage']['value']
     l1_current = data_energy['l1_current']['value']
     l2_current = data_energy['l2_current']['value']
