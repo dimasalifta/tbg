@@ -200,22 +200,26 @@ def on_publish_tbg(payload,topic):
     # Hubungkan ke broker MQTT
     client.connect(broker2, 1884, 60)
     
-    # if topic == 'TBGPower/T00Q56/status':
-    #     client.will_set(topic, payload, qos=2, retain=True)
-    #     client.publish(topic, payload, qos=2, retain=True)
+    client.loop_start()
+    if topic == 'TBGPower/T00Q56/status':
+        client.will_set(topic, payload, qos=2, retain=True)
+        result = client.publish(topic, payload, qos=2, retain=True)
         
-    # elif topic == 'TBGPower/T00Q56/parameters':
-    #     client.publish(topic, payload, qos=0, retain=False)
+    elif topic == 'TBGPower/T00Q56/parameters':
+        result = client.publish(topic, payload, qos=1, retain=False)
         
-    # elif topic == 'TBGPower/T00Q56/alarms':
-    #     client.publish(topic, payload, qos=2, retain=False)
+    elif topic == 'TBGPower/T00Q56/alarms':
+        result = client.publish(topic, payload, qos=2, retain=False)
         
-    # elif topic == 'TBGPower/T00Q56/consumption':
-    #     client.publish(topic, payload, qos=2, retain=False)
-    # else:
+    elif topic == 'TBGPower/T00Q56/consumption':
+        result = client.publish(topic, payload, qos=2, retain=False)
+    else:
         # Kirim pesan ke topik MQTT
-    client.publish(topic, payload)
+        result = client.publish(topic=topic, payload=payload, qos=1)
+    # Wait for the publish to complete
+    result.wait_for_publish()
     # Tutup koneksi
+    client.loop_stop()
     client.disconnect()
     
 def mqtt_process_bintaro():
@@ -241,6 +245,12 @@ def publish_data():
         on_publish_bintaro(parameters,'TBGPower/T00Q56/parameters')
         on_publish_bintaro(alarms,'TBGPower/T00Q56/alarms')
         on_publish_bintaro(consumptions,'TBGPower/T00Q56/consumptions')
+        
+        on_publish_tbg(siteid,'TBGPower/T00Q56/siteid')
+        on_publish_tbg(status,'TBGPower/T00Q56/status')
+        on_publish_tbg(parameters,'TBGPower/T00Q56/parameters')
+        on_publish_tbg(alarms,'TBGPower/T00Q56/alarms')
+        on_publish_tbg(consumptions,'TBGPower/T00Q56/consumptions')
         # on_publish_tbg()
         # time.sleep(5)
     # pass
