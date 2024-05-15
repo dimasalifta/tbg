@@ -75,7 +75,7 @@ def read_sensors():
         "DC Output Current":system_current, 
         "DC Total Power":battery_energy,
 
-        "Rectifier Total Current":rectifier_total_current,
+        "Rectifier Total Current":rectifier_total_current
         
         # "Battery Capacity":total_remaining_capacity_percent,
         
