@@ -122,7 +122,7 @@ def read_sensors():
                                     "Rectifier 3": rectifier3_serial_number},
         "Recitifier Load Usage":{"Rectifier 1": rectifier1_load_usage*0.1,
                                     "Rectifier 2": rectifier2_load_usage*0.1,
-                                    "Rectifier 3": rectifier3_load_usage}*0.1,
+                                    "Rectifier 3": rectifier3_load_usage*0.1},
         "Recitifier Status":{"Rectifier 1": rectifier1_status,
                                     "Rectifier 2": rectifier2_status,
                                     "Rectifier 3": rectifier3_status},
