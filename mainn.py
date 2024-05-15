@@ -136,21 +136,21 @@ def on_publish_bintaro(payload,topic):
     # Hubungkan ke broker MQTT
     client.connect(broker1, 1883, 60)
     client.loop_start()
-    # if topic == 'TBGPower/T00Q56/status':
-    #     client.will_set(topic, payload, qos=2, retain=True)
-    #     client.publish(topic, payload, qos=2, retain=True)
+    if topic == 'TBGPower/T00Q56/status':
+        client.will_set(topic, payload, qos=2, retain=True)
+        result = client.publish(topic, payload, qos=2, retain=True)
         
-    # elif topic == 'TBGPower/T00Q56/parameters':
-    #     client.publish(topic, payload, qos=1, retain=False)
+    elif topic == 'TBGPower/T00Q56/parameters':
+        result = client.publish(topic, payload, qos=1, retain=False)
         
-    # elif topic == 'TBGPower/T00Q56/alarms':
-    #     client.publish(topic, payload, qos=2, retain=False)
+    elif topic == 'TBGPower/T00Q56/alarms':
+        result = client.publish(topic, payload, qos=2, retain=False)
         
-    # elif topic == 'TBGPower/T00Q56/consumption':
-    #     client.publish(topic, payload, qos=2, retain=False)
-    # else:
-    #     # Kirim pesan ke topik MQTT
-    result = client.publish(topic=topic, payload=payload, qos=1)
+    elif topic == 'TBGPower/T00Q56/consumption':
+        result = client.publish(topic, payload, qos=2, retain=False)
+    else:
+        # Kirim pesan ke topik MQTT
+        result = client.publish(topic=topic, payload=payload, qos=1)
     # Wait for the publish to complete
     result.wait_for_publish()
     # Tutup koneksi
