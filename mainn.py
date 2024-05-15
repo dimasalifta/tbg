@@ -2,7 +2,7 @@ from modules import rs485_sht20,rs485_energy,snmp_megmeet,snmp_megmeet_alarm,soc
 import time
 import paho.mqtt.client as mqtt
 import multiprocessing
-
+import json
 broker1 = '218.235.216.37'
 topic1 = 'test'
 
@@ -30,9 +30,10 @@ def read_sensors():
     
     
     siteid = "BINTARO"
+    
     status = {"online": 1,
               "ip":str(ip_value)}
-    
+    status = json.dumps(status, indent=4)
     
     return siteid,status
 
@@ -97,7 +98,7 @@ def publish_data():
         on_publish_bintaro(siteid,'test')
         on_publish_bintaro(status,'test')
         # on_publish_tbg()
-        time.sleep(5)
+        # time.sleep(5)
     # pass
 if __name__ == "__main__":
     # Buat process untuk menjalankan client MQTT
