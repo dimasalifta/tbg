@@ -30,7 +30,7 @@ def read_sensors():
     ac_energy_consumption = data_energy['ac_energy_consumption']['value']
     time.sleep(1)
     
-    data_megmeet = snmp_megmeet.read_sensor_data(debug=True)
+    data_megmeet = snmp_megmeet.read_sensor_data(debug=False)
     # print(data_megmeet)
     # print(type(data_megmeet))
     system_voltage = data_megmeet['system_voltage']['value']
@@ -43,9 +43,6 @@ def read_sensors():
     rectifier3_output_current = data_megmeet['rectifier3_output_current']['value']
     rectifier_total_current = rectifier1_output_current + rectifier2_output_current + rectifier3_output_current
     
-    # battery1_capacity = data_megmeet['battery1_capacity']['value']
-    # battery2_capacity = data_megmeet['battery2_capacity']['value']
-    # total_remaining_capacity_percent = (battery1_capacity+battery2_capacity)/2
     # l3_voltage = data_megmeet['l3_voltage']['value']
     # l1_current = data_megmeet['l1_current']['value']
     # l3_current = data_megmeet['l3_current']['value']
@@ -84,7 +81,7 @@ def read_sensors():
         "DC Consumption":battery_energy,
         
         
-        # "Battery Capacity":total_remaining_capacity_percent
+        # "Battery Capacity":total_remaining_capacity_percent,
         
         # "Battery Current    ":total_battery_current,
         
