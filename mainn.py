@@ -35,6 +35,8 @@ def read_sensors():
     # print(type(data_megmeet))
     system_voltage = data_megmeet['system_voltage']['value']
     system_current = data_megmeet['system_current']['value']
+    battery1_capacity = data_megmeet['battery1_capacity']['value']
+    battery2_capacity = data_megmeet['battery2_capacity']['value']
     battery_energy = data_megmeet['battery_energy']['value']
     
 
