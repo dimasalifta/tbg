@@ -1,4 +1,4 @@
-# from modules import rs485_sht20,rs485_energy,snmp_megmeet
+from modules import rs485_sht20,rs485_energy,snmp_megmeet,snmp_megmeet_alarm
 import time
 import paho.mqtt.client as mqtt
 import multiprocessing
@@ -11,13 +11,15 @@ username = 'mosdev'
 password = 'Des2023!@'
 topic2 = 'test'
 
-# # Read sensor data
-# data_sht20      = rs485_sht20.  read_sensor_data(debug=True)
-# time.sleep(1)
-# data_energy     = rs485_energy. read_sensor_data(debug=True)
-# time.sleep(1)
-# data_megmeet    = snmp_megmeet. read_sensor_data(debug=True)
-# time.sleep(1)
+# Read sensor data
+data_sht20          = rs485_sht20.          read_sensor_data(debug=True)
+time.sleep(1)
+data_energy         = rs485_energy.         read_sensor_data(debug=True)
+time.sleep(1)
+data_megmeet        = snmp_megmeet.         read_sensor_data(debug=True)
+time.sleep(1)
+data_megmeet_alarm  = snmp_megmeet_alarm.   read_sensor_data(debug=True)
+time.sleep(1)
 
 
 def on_connect_bintaro(client, userdata, flags, rc):
