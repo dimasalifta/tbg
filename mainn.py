@@ -29,7 +29,7 @@ def read_sensors():
     time.sleep(1)
     
     data_megmeet = snmp_megmeet.read_sensor_data(debug=True)
-    system_voltage = data_megmeet['system_voltage']['value']
+    # system_voltage = data_megmeet['system_voltage']['value']
     system_current = data_megmeet['system_current']['value']
     battery_energy = data_megmeet['battery_energy']['value']
     
@@ -192,10 +192,10 @@ def mqtt_process_tbg():
 
 def publish_data():
     while True:
-        siteid,status = read_sensors()
+        siteid,status,parameters = read_sensors()
         on_publish_bintaro(siteid,'TBGPower/T00Q56/siteid')
         on_publish_bintaro(status,'TBGPower/T00Q56/status')
-        on_publish_bintaro(siteid,'TBGPower/T00Q56/parameters')
+        on_publish_bintaro(parameters,'TBGPower/T00Q56/parameters')
         # on_publish_bintaro(status,'TBGPower/T00Q56/alarms')
         # on_publish_bintaro(siteid,'TBGPower/T00Q56/consumption')
         # on_publish_tbg()
