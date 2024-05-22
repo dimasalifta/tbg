@@ -173,10 +173,6 @@ def read_sensors():
     return siteid,status,parameters,alarms,consumptions
 
 
-def on_connect_bintaro(client, userdata, flags, rc):
-    print(f"Connected to {broker1} with result code {rc}")
-    client.subscribe(topic1)
-
 def on_connect_tbg(client, userdata, flags, rc):
     global site_id
     print(f"Connected to {broker2} with result code {rc}")
@@ -186,39 +182,9 @@ def on_connect_tbg(client, userdata, flags, rc):
         client.subscribe(f'{main_topic}/{site_id}/parameters', qos=1)
         client.subscribe(f'{main_topic}/{site_id}/alarms', qos=2)
         client.subscribe(f'{main_topic}/{site_id}/consumptions', qos=2)
-def on_message_bintaro(client, userdata, msg):
-    print(f"Broker 1: {msg.topic} {msg.payload}")
   
 def on_message_tbg(client, userdata, msg):
     print(f"Broker 2: {msg.topic} {msg.payload}")
-
-def on_publish_bintaro(payload,topic):
-    # Buat instance client MQTT
-    client = mqtt.Client()
-
-    # Hubungkan ke broker MQTT
-    client.connect(broker1, 1883, 60)
-    client.loop_start()
-    if topic == f'{main_topic}/{site_id}/status':
-        client.will_set(topic, payload, qos=2, retain=True)
-        result = client.publish(topic, payload, qos=2, retain=True)
-        
-    elif topic == f'{main_topic}/{site_id}/parameters':
-        result = client.publish(topic, payload, qos=1, retain=False)
-        
-    elif topic == f'{main_topic}/{site_id}/alarms':
-        result = client.publish(topic, payload, qos=2, retain=False)
-        
-    elif topic == f'{main_topic}/{site_id}/consumption':
-        result = client.publish(topic, payload, qos=2, retain=False)
-    else:
-        # Kirim pesan ke topik MQTT
-        result = client.publish(topic=topic, payload=payload, qos=1)
-    # Wait for the publish to complete
-    result.wait_for_publish()
-    # Tutup koneksi
-    client.loop_stop()
-    client.disconnect()
     
 def on_publish_tbg(payload,topic):
     # Buat instance client MQTT
@@ -249,46 +215,32 @@ def on_publish_tbg(payload,topic):
     client.loop_stop()
     client.disconnect()
     
-def mqtt_process_bintaro():
-    bintaro = mqtt.Client()
-    bintaro.on_connect = on_connect_bintaro
-    bintaro.on_message = on_message_bintaro
-    bintaro.connect(broker1, 1883, 60)
-    bintaro.loop_forever()
-
 def mqtt_process_tbg():
     tbg = mqtt.Client()
     tbg.on_connect = on_connect_tbg
     tbg.on_message = on_message_tbg
     tbg.username_pw_set(username, password)
     tbg.connect(broker2, 1884, 60)
-    tbg.subscribe(f'{main_topic}/{site_id}/status', qos=2)
-    tbg.subscribe(f'{main_topic}/{site_id}/parameters', qos=1)
-    tbg.subscribe(f'{main_topic}/{site_id}/alarms', qos=2)
-    tbg.subscribe(f'{main_topic}/{site_id}/consumptions', qos=2)
+    tbg.subscribe(f'{main_topic}/{site_id}/status', qos=0)
+    tbg.subscribe(f'{main_topic}/{site_id}/parameters', qos=0)
+    tbg.subscribe(f'{main_topic}/{site_id}/alarms', qos=0)
+    tbg.subscribe(f'{main_topic}/{site_id}/consumptions', qos=0)
     tbg.loop_forever()
 
 def publish_data():
     while True:
-        siteid,status,parameters,alarms,consumptions = read_sensors()
-        # on_publish_bintaro(siteid,f'{main_topic}/{site_id}/siteid')
-        # on_publish_bintaro(status,f'{main_topic}/{site_id}/status')
-        # on_publish_bintaro(parameters,f'{main_topic}/{site_id}/parameters')
-        # on_publish_bintaro(alarms,f'{main_topic}/{site_id}/alarms')
-        # on_publish_bintaro(consumptions,f'{main_topic}/{site_id}/consumptions')
-        
-        # on_publish_tbg(siteid,f'{main_topic}/{site_id}/siteid')
+        status,parameters,alarms,consumptions = read_sensors()
+        print(status)
+        print(parameters)
+        print(alarms)
+        print(consumptions)
         on_publish_tbg(status,f'{main_topic}/{site_id}/status')
         on_publish_tbg(parameters,f'{main_topic}/{site_id}/parameters')
         on_publish_tbg(alarms,f'{main_topic}/{site_id}/alarms')
         on_publish_tbg(consumptions,f'{main_topic}/{site_id}/consumptions')
-        # on_publish_tbg()
-        # time.sleep(5)
-    # pass
+
+
 if __name__ == "__main__":
-    # Buat process untuk menjalankan client MQTT
-    mqtt_bintaro_main = multiprocessing.Process(target=mqtt_process_bintaro)
-    mqtt_bintaro_main.start()
     mqtt_tbg_main = multiprocessing.Process(target=mqtt_process_tbg)
     mqtt_tbg_main.start()
     publish_data_main = multiprocessing.Process(target=publish_data)
