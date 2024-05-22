@@ -229,7 +229,7 @@ def mqtt_process_tbg():
 
 def publish_data():
     while True:
-        status,parameters,alarms,consumptions = read_sensors()
+        site_id,status,parameters,alarms,consumptions = read_sensors()
         print(status)
         print(parameters)
         print(alarms)
