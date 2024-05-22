@@ -103,12 +103,12 @@ def read_sensors():
     status = json.dumps(status, indent=4)
     
     parameters = {
-        "AC Voltage":{"L1":l1_voltage,
+        "AC Voltage":{  "L1":l1_voltage,
                         "L2":l2_voltage,
                         "L3":l3_voltage},
-        "AC Current":{"L1":l1_current,
-                        "L2":l2_current,
-                        "L3":l3_current},
+        "AC Current":{  "L1":round(l1_current,2),
+                        "L2":round(l2_current,2),
+                        "L3":round(l3_current,2)},
         
         "DC Voltage": round(system_voltage*0.001, 2),
         "DC Current": round(system_current*0.001, 2),
@@ -116,7 +116,7 @@ def read_sensors():
         "DC Output Current":round(system_current*0.001, 2),
         "DC Total Power":round(battery_energy*0.001, 2),
 
-        "Rectifier Total Current":rectifier_total_current*0.1,
+        "Rectifier Total Current":round(rectifier_total_current*0.1,2),
         
         "AC Consumption":ac_energy_consumption,
         "DC Consumption":round(battery_energy*0.001, 2),
@@ -142,9 +142,9 @@ def read_sensors():
         "Recitifier Serial Number":{"Rectifier 1": rectifier1_serial_number,
                                     "Rectifier 2": rectifier2_serial_number,
                                     "Rectifier 3": rectifier3_serial_number},
-        "Recitifier Load Usage":{"Rectifier 1": rectifier1_load_usage*0.1,
-                                    "Rectifier 2": rectifier2_load_usage*0.1,
-                                    "Rectifier 3": rectifier3_load_usage*0.1},
+        "Recitifier Load Usage":{   "Rectifier 1": round(rectifier1_load_usage*0.1,2),
+                                    "Rectifier 2": round(rectifier2_load_usage*0.1,2),
+                                    "Rectifier 3": round(rectifier3_load_usage*0.1,2)},
         "Recitifier Status":{"Rectifier 1": rectifier1_status,
                                     "Rectifier 2": rectifier2_status,
                                     "Rectifier 3": rectifier3_status},
