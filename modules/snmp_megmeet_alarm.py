@@ -19,10 +19,10 @@ def read_sensor_data(debug=False):
     sensor_data = {}
     try:
         # Iterate over x and y values
-        for x in range(1, 7):
+        for x in range(1, 10):
             # Dictionary to store values for each iteration of y
             data = {}
-            for y in range(1, 7):  # Assuming y ranges from 1 to 6
+            for y in range(1, 10):  # Assuming y ranges from 1 to 6
                 # Construct the OID by substituting %d with the iteration numbers
                 oid = oid_template % (y, x)
                 

@@ -86,11 +86,21 @@ def read_sensors():
     rectifier1_serial_number = data_megmeet['rectifier1_serial_number']['value']
     rectifier2_serial_number = data_megmeet['rectifier2_serial_number']['value']
     rectifier3_serial_number = data_megmeet['rectifier3_serial_number']['value']
-
+    time.sleep(1)
     
-    time.sleep(1)
     data_megmeet_alarm = snmp_megmeet_alarm.read_sensor_data(debug=False)
+    door_open = data_megmeet_alarm['door_open']['value']
+    ac_l1_fail = data_megmeet_alarm['ac_l1_fail']['value']
+    ac_l2_fail = data_megmeet_alarm['ac_l2_fail']['value']
+    ac_l3_fail = data_megmeet_alarm['ac_l3_fail']['value']
+    spd_fail = data_megmeet_alarm['spd_fail']['value']
+    high_temp = data_megmeet_alarm['high_temp']['value']
+    rect_fail = data_megmeet_alarm['rect_fail']['value']
+    high_volt = data_megmeet_alarm['high_volt']['value']
+    low_volt = data_megmeet_alarm['low_volt']['value']
+    battery_fail = data_megmeet_alarm['battery_fail']['value']
     time.sleep(1)
+    
     data_ip = socket_ip.read_sensor_data(debug=False)
     ip_value = str(data_ip)
     time.sleep(1)
