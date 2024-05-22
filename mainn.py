@@ -134,9 +134,9 @@ def read_sensors():
         "Battery Temperature":{"Battery 1":round(battery1_temperature*0.001, 2),
                                 "Battery 2":round(battery2_temperature*0.001, 2)},
         
-        "Recitifier Temperature":{"Rectifier 1": rectifier1_temperature*0.1,
-                                    "Rectifier 2": rectifier2_temperature*0.1,
-                                    "Rectifier 3": rectifier3_temperature*0.1},
+        "Recitifier Temperature":{"Rectifier 1": round(rectifier1_temperature*0.1,2),
+                                    "Rectifier 2": round(rectifier2_temperature*0.1,2),
+                                    "Rectifier 3": round(rectifier3_temperature*0.1,2)},
         
         "Rectifier Installed":rectifier_quantity-3,
         "Recitifier Serial Number":{"Rectifier 1": rectifier1_serial_number,
