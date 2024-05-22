@@ -17,7 +17,7 @@ site_id = None  # Global variable for site_id
 def read_sensors():
     data_sht20 = rs485_sht20.read_sensor_data(debug=False)
     temperature = data_sht20['temperature']['value']
-    humidity = data_sht20['temperature']['value']
+    humidity = data_sht20['humidity']['value']
     # print(temperature_value)
     # print(type(temperature_value))
     time.sleep(1)
@@ -164,7 +164,16 @@ def read_sensors():
         }
     parameters = json.dumps(parameters, indent=4)
     
-    alarms = {"Door Open": 1}
+    alarms = {"Door Open": 1,
+              "AC L1 Fail": 0,
+              "AC L2 Fail": 0,
+              "AC L3 Fail": 0,
+              "SPD Fail": 0,
+              "High Temp": 0,
+              "Rect Fail": 0,
+              "High Volt": 0,
+              "Low Volt": 0,
+              "Battery Fail": 0}
     alarms = json.dumps(alarms, indent=4)
     
     consumptions = {"AC": ac_energy_consumption,
